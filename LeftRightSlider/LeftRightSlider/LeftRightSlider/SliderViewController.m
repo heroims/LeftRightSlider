@@ -34,6 +34,24 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 @implementation SliderViewController
 
+#if __has_feature(objc_arc)
+#else
+-(void)dealloc{
+    [_mainContentView release];
+    [_leftSideView release];
+    [_rightSideView release];
+    
+    [_controllersDict release];
+    
+    [_tapGestureRec release];
+    [_panGestureRec release];
+    
+    [_leftVC release];
+    [_rightVC release];
+    [super dealloc];
+}
+#endif
+
 + (SliderViewController*)sharedSliderController
 {
     static SliderViewController *sharedSVC;
@@ -52,8 +70,6 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     _controllersDict = [NSMutableDictionary dictionary];
     
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_navigation_background.png"] forBarMetrics:UIBarMetricsDefault];
-    
     [self initSubviews];
     
     [self initChildControllers:_leftVC rightVC:_rightVC];
@@ -66,23 +82,22 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     _panGestureRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGesture:)];
     [_mainContentView addGestureRecognizer:_panGestureRec];
+    
 }
 
 #pragma mark - Init
 
 - (void)initSubviews
 {
-    UIView *rv = [[UIView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:rv];
-    _rightSideView = rv;
+    _rightSideView = [[UIView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:_rightSideView];
+
+    _leftSideView = [[UIView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:_leftSideView];
     
-    UIView *lv = [[UIView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:lv];
-    _leftSideView = lv;
-    
-    UIView *mv = [[UIView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:mv];
-    _mainContentView = mv;
+    _mainContentView = [[UIView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:_mainContentView];
+
 }
 
 - (void)initChildControllers:(UIViewController*)leftVC rightVC:(UIViewController*)rightVC
@@ -106,8 +121,15 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     if (!controller)
     {
         Class c = NSClassFromString(className);
+        
+#if __has_feature(objc_arc)
         UIViewController *vc = [[c alloc] init];
         controller = [[UINavigationController alloc] initWithRootViewController:vc];
+#else
+        UIViewController *vc = [[[c alloc] init] autorelease];
+        controller = [[[UINavigationController alloc] initWithRootViewController:vc] autorelease];
+#endif
+
         
         UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         leftBtn.bounds = CGRectMake(0, 0, 44, 44);

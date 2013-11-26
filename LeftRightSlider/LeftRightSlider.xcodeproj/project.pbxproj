@@ -394,6 +394,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LeftRightSlider/LeftRightSlider-Prefix.pch";
 				INFOPLIST_FILE = "LeftRightSlider/LeftRightSlider-Info.plist";
@@ -409,6 +410,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LeftRightSlider/LeftRightSlider-Prefix.pch";
 				INFOPLIST_FILE = "LeftRightSlider/LeftRightSlider-Info.plist";
@@ -479,6 +481,7 @@
 				D826D00318450F7300C5E495 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D826D00418450F7300C5E495 /* Build configuration list for PBXNativeTarget "LeftRightSliderTests" */ = {
 			isa = XCConfigurationList;
@@ -487,6 +490,7 @@
 				D826D00618450F7300C5E495 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
