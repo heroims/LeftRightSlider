@@ -27,7 +27,9 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor=[UIColor blueColor];
+    UIImageView *imgV=[[UIImageView alloc] initWithFrame:self.view.bounds];
+    [imgV setImage:[UIImage imageNamed:@"2222"]];
+    [self.view addSubview:imgV];
 	// Do any additional setup after loading the view.
 }
 

@@ -26,7 +26,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor=[UIColor redColor];
+    UIImageView *imgV=[[UIImageView alloc] initWithFrame:self.view.bounds];
+    [imgV setImage:[UIImage imageNamed:@"1111"]];
+    [self.view addSubview:imgV];
+    
 	// Do any additional setup after loading the view.
 }
 

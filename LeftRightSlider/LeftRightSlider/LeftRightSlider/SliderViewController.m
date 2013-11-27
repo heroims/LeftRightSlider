@@ -8,18 +8,12 @@
 
 #import "SliderViewController.h"
 
-#define LRSCloseDuration 0.3f
-#define LRSOpenDuration 0.4f
-#define LRSContentScale 0.83f
-#define LRSContentOffset 220.0f
-#define LRSJudgeOffset 100.0f
-
 typedef NS_ENUM(NSInteger, RMoveDirection) {
     RMoveDirectionLeft = 0,
     RMoveDirectionRight
 };
 
-@interface SliderViewController (){
+@interface SliderViewController ()<UIGestureRecognizerDelegate>{
     UIView *_mainContentView;
     UIView *_leftSideView;
     UIView *_rightSideView;
@@ -63,6 +57,23 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     return sharedSVC;
 }
 
+- (id)init{
+    if (self = [super init]){
+        _LeftSContentOffset=160;
+        _RightSContentOffset=160;
+        _LeftSContentScale=0.85;
+        _RightSContentScale=0.85;
+        _LeftSJudgeOffset=100;
+        _RightSJudgeOffset=100;
+        _LeftSOpenDuration=0.4;
+        _RightSOpenDuration=0.4;
+        _LeftSCloseDuration=0.3;
+        _RightSCloseDuration=0.3;
+    }
+        
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -72,11 +83,12 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     [self initSubviews];
     
-    [self initChildControllers:_leftVC rightVC:_rightVC];
+    [self initChildControllers:_LeftVC rightVC:_RightVC];
     
     [self showContentControllerWithModel:@"MainViewController"];
     
     _tapGestureRec = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSideBar)];
+    _tapGestureRec.delegate=self;
     [self.view addGestureRecognizer:_tapGestureRec];
     _tapGestureRec.enabled = NO;
     
@@ -168,7 +180,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     [self.view sendSubviewToBack:_rightSideView];
     [self configureViewShadowWithDirection:RMoveDirectionRight];
     
-    [UIView animateWithDuration:LRSOpenDuration
+    [UIView animateWithDuration:_LeftSOpenDuration
                      animations:^{
                          _mainContentView.transform = conT;
                      }
@@ -184,7 +196,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     [self.view sendSubviewToBack:_leftSideView];
     [self configureViewShadowWithDirection:RMoveDirectionLeft];
     
-    [UIView animateWithDuration:LRSOpenDuration
+    [UIView animateWithDuration:_RightSOpenDuration
                      animations:^{
                          _mainContentView.transform = conT;
                      }
@@ -196,7 +208,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 - (void)closeSideBar
 {
     CGAffineTransform oriT = CGAffineTransformIdentity;
-    [UIView animateWithDuration:LRSCloseDuration
+    [UIView animateWithDuration:_mainContentView.transform.tx==_LeftSContentOffset?_LeftSCloseDuration:_RightSCloseDuration
                      animations:^{
                          _mainContentView.transform = oriT;
                      }
@@ -223,13 +235,13 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             [self.view sendSubviewToBack:_rightSideView];
             [self configureViewShadowWithDirection:RMoveDirectionRight];
             
-            if (_mainContentView.frame.origin.x < LRSContentOffset)
+            if (_mainContentView.frame.origin.x < _LeftSContentOffset)
             {
-                sca = 1 - (_mainContentView.frame.origin.x/LRSContentOffset) * (1-LRSContentScale);
+                sca = 1 - (_mainContentView.frame.origin.x/_LeftSContentOffset) * (1-_LeftSContentScale);
             }
             else
             {
-                sca = LRSContentScale;
+                sca = _LeftSContentScale;
             }
         }
         else    //transX < 0
@@ -237,13 +249,13 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             [self.view sendSubviewToBack:_leftSideView];
             [self configureViewShadowWithDirection:RMoveDirectionLeft];
             
-            if (_mainContentView.frame.origin.x > -LRSContentOffset)
+            if (_mainContentView.frame.origin.x > -_RightSContentOffset)
             {
-                sca = 1 - (-_mainContentView.frame.origin.x/LRSContentOffset) * (1-LRSContentScale);
+                sca = 1 - (-_mainContentView.frame.origin.x/_RightSContentOffset) * (1-_RightSContentScale);
             }
             else
             {
-                sca = LRSContentScale;
+                sca = _RightSContentScale;
             }
         }
         CGAffineTransform transS = CGAffineTransformMakeScale(1.0, sca);
@@ -257,7 +269,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     {
         CGFloat panX = [panGes translationInView:_mainContentView].x;
         CGFloat finalX = currentTranslateX + panX;
-        if (finalX > LRSJudgeOffset)
+        if (finalX > _RightSJudgeOffset)
         {
             CGAffineTransform conT = [self transformWithDirection:RMoveDirectionRight];
             [UIView beginAnimations:nil context:nil];
@@ -267,7 +279,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _tapGestureRec.enabled = YES;
             return;
         }
-        if (finalX < -LRSJudgeOffset)
+        if (finalX < -_LeftSJudgeOffset)
         {
             CGAffineTransform conT = [self transformWithDirection:RMoveDirectionLeft];
             [UIView beginAnimations:nil context:nil];
@@ -294,19 +306,22 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 - (CGAffineTransform)transformWithDirection:(RMoveDirection)direction
 {
     CGFloat translateX = 0;
+    CGFloat transcale = 0;
     switch (direction) {
         case RMoveDirectionLeft:
-            translateX = -LRSContentOffset;
+            translateX = -_LeftSContentOffset;
+            transcale = _LeftSContentScale;
             break;
         case RMoveDirectionRight:
-            translateX = LRSContentOffset;
+            translateX = _RightSContentOffset;
+            transcale = _RightSContentScale;
             break;
         default:
             break;
     }
     
     CGAffineTransform transT = CGAffineTransformMakeTranslation(translateX, 0);
-    CGAffineTransform scaleT = CGAffineTransformMakeScale(1.0, LRSContentScale);
+    CGAffineTransform scaleT = CGAffineTransformMakeScale(1.0, transcale);
     CGAffineTransform conT = CGAffineTransformConcat(transT, scaleT);
     
     return conT;
@@ -330,6 +345,15 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     _mainContentView.layer.shadowOffset = CGSizeMake(shadowW, 1.0);
     _mainContentView.layer.shadowColor = [UIColor blackColor].CGColor;
     _mainContentView.layer.shadowOpacity = 0.8f;
+}
+
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{    
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
+    return  YES;
 }
 
 @end

@@ -23,6 +23,9 @@
 		D826D00D184513E200C5E495 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D826D00C184513E200C5E495 /* MainViewController.m */; };
 		D826D010184513FA00C5E495 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D826D00F184513FA00C5E495 /* LeftViewController.m */; };
 		D826D0131845141100C5E495 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D826D0121845141100C5E495 /* RightViewController.m */; };
+		D826D01A1846508C00C5E495 /* 2222.png in Resources */ = {isa = PBXBuildFile; fileRef = D826D0191846508C00C5E495 /* 2222.png */; };
+		D826D01C184650C600C5E495 /* 3333.png in Resources */ = {isa = PBXBuildFile; fileRef = D826D01B184650C600C5E495 /* 3333.png */; };
+		D89A0691184665730014A4FD /* 1111.png in Resources */ = {isa = PBXBuildFile; fileRef = D89A0690184665730014A4FD /* 1111.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +63,9 @@
 		D826D00F184513FA00C5E495 /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
 		D826D0111845141100C5E495 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
 		D826D0121845141100C5E495 /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightViewController.m; sourceTree = "<group>"; };
+		D826D0191846508C00C5E495 /* 2222.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2222.png; sourceTree = "<group>"; };
+		D826D01B184650C600C5E495 /* 3333.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3333.png; sourceTree = "<group>"; };
+		D89A0690184665730014A4FD /* 1111.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1111.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +134,7 @@
 				D826D00F184513FA00C5E495 /* LeftViewController.m */,
 				D826D0111845141100C5E495 /* RightViewController.h */,
 				D826D0121845141100C5E495 /* RightViewController.m */,
+				D826D01618464F2900C5E495 /* Images */,
 				D826CFEA18450F7300C5E495 /* Images.xcassets */,
 				D826CFDF18450F7300C5E495 /* Supporting Files */,
 			);
@@ -170,6 +177,16 @@
 				D826D00918450FDF00C5E495 /* SliderViewController.m */,
 			);
 			path = LeftRightSlider;
+			sourceTree = "<group>";
+		};
+		D826D01618464F2900C5E495 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D89A0690184665730014A4FD /* 1111.png */,
+				D826D0191846508C00C5E495 /* 2222.png */,
+				D826D01B184650C600C5E495 /* 3333.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,7 +265,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D826CFE318450F7300C5E495 /* InfoPlist.strings in Resources */,
+				D826D01C184650C600C5E495 /* 3333.png in Resources */,
+				D89A0691184665730014A4FD /* 1111.png in Resources */,
 				D826CFEB18450F7300C5E495 /* Images.xcassets in Resources */,
+				D826D01A1846508C00C5E495 /* 2222.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,6 +420,7 @@
 				INFOPLIST_FILE = "LeftRightSlider/LeftRightSlider-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -416,6 +437,7 @@
 				INFOPLIST_FILE = "LeftRightSlider/LeftRightSlider-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

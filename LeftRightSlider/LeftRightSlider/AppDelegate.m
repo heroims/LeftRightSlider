@@ -17,10 +17,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    SliderViewController *sliderVC = [[SliderViewController alloc] init];
-    sliderVC.leftVC=[[LeftViewController alloc] init];
-    sliderVC.rightVC=[[RightViewController alloc] init];
-    self.window.rootViewController = sliderVC;
+    [SliderViewController sharedSliderController].LeftVC=[[LeftViewController alloc] init];
+    [SliderViewController sharedSliderController].RightVC=[[RightViewController alloc] init];
+    
+    self.window.rootViewController = [SliderViewController sharedSliderController];
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
