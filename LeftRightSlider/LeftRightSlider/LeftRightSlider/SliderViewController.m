@@ -42,6 +42,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     [_leftVC release];
     [_rightVC release];
+    [_MainVC release];
     [super dealloc];
 }
 #endif
@@ -78,7 +79,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 {
     [super viewDidLoad];
     
-    
+    self.navigationController.navigationBarHidden=YES;
+
     _controllersDict = [NSMutableDictionary dictionary];
     
     [self initSubviews];
@@ -135,31 +137,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         Class c = NSClassFromString(className);
         
 #if __has_feature(objc_arc)
-        UIViewController *vc = [[c alloc] init];
-        controller = [[UINavigationController alloc] initWithRootViewController:vc];
+        controller = [[c alloc] init];
 #else
-        UIViewController *vc = [[[c alloc] init] autorelease];
-        controller = [[[UINavigationController alloc] initWithRootViewController:vc] autorelease];
+        controller = [[[c alloc] init] autorelease];
 #endif
-
-        
-        UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        leftBtn.bounds = CGRectMake(0, 0, 44, 44);
-        [leftBtn setTitle:@"左" forState:UIControlStateNormal];
-        [leftBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [leftBtn addTarget:self action:@selector(leftItemClick) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
-        
-        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightBtn.bounds = CGRectMake(0, 0, 44, 44);
-        [rightBtn setTitle:@"右" forState:UIControlStateNormal];
-        [rightBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [rightBtn addTarget:self action:@selector(rightItemClick) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-        
-        vc.navigationItem.rightBarButtonItem = rightItem;
-        vc.navigationItem.leftBarButtonItem = leftItem;
-        
         [_controllersDict setObject:controller forKey:className];
     }
     
@@ -171,6 +152,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     controller.view.frame = _mainContentView.frame;
     [_mainContentView addSubview:controller.view];
+    
+    self.MainVC=controller;
 }
 
 - (void)leftItemClick

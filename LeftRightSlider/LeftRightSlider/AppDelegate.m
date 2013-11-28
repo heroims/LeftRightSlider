@@ -2,14 +2,12 @@
 //  AppDelegate.m
 //  LeftRightSlider
 //
-//  Created by heroims on 13-11-27.
-//  Copyright (c) 2013年 heroims. All rights reserved.
+//  Created by Zhao Yiqi on 13-11-27.
+//  Copyright (c) 2013年 Zhao Yiqi. All rights reserved.
 //
 
 #import "AppDelegate.h"
-#import "SliderViewController.h"
-#import "LeftViewController.h"
-#import "RightViewController.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -26,7 +24,7 @@
     [SliderViewController sharedSliderController].RightSJudgeOffset=160;
 
 
-    self.window.rootViewController = [SliderViewController sharedSliderController];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -59,5 +57,11 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
++(AppDelegate*)instance
+{
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
 
 @end

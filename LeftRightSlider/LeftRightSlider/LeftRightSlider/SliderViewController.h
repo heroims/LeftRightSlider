@@ -2,8 +2,8 @@
 //  SliderViewController.h
 //  LeftRightSlider
 //
-//  Created by heroims on 13-11-27.
-//  Copyright (c) 2013年 heroims. All rights reserved.
+//  Created by Zhao Yiqi on 13-11-27.
+//  Copyright (c) 2013年 Zhao Yiqi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -12,6 +12,7 @@
 
 @property(nonatomic,strong)UIViewController *LeftVC;
 @property(nonatomic,strong)UIViewController *RightVC;
+@property(nonatomic,strong)UIViewController *MainVC;
 
 @property(nonatomic,assign)float LeftSContentOffset;
 @property(nonatomic,assign)float RightSContentOffset;

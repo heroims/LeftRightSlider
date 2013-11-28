@@ -25,6 +25,8 @@
 		D826D0131845141100C5E495 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D826D0121845141100C5E495 /* RightViewController.m */; };
 		D826D01A1846508C00C5E495 /* 2222.png in Resources */ = {isa = PBXBuildFile; fileRef = D826D0191846508C00C5E495 /* 2222.png */; };
 		D826D01C184650C600C5E495 /* 3333.png in Resources */ = {isa = PBXBuildFile; fileRef = D826D01B184650C600C5E495 /* 3333.png */; };
+		D84493C81847A867003D2F17 /* ViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = D84493C71847A867003D2F17 /* ViewController1.m */; };
+		D84493CB1847AF54003D2F17 /* ViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = D84493CA1847AF54003D2F17 /* ViewController2.m */; };
 		D89A0691184665730014A4FD /* 1111.png in Resources */ = {isa = PBXBuildFile; fileRef = D89A0690184665730014A4FD /* 1111.png */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,10 @@
 		D826D0121845141100C5E495 /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightViewController.m; sourceTree = "<group>"; };
 		D826D0191846508C00C5E495 /* 2222.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2222.png; sourceTree = "<group>"; };
 		D826D01B184650C600C5E495 /* 3333.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3333.png; sourceTree = "<group>"; };
+		D84493C61847A867003D2F17 /* ViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController1.h; sourceTree = "<group>"; };
+		D84493C71847A867003D2F17 /* ViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController1.m; sourceTree = "<group>"; };
+		D84493C91847AF54003D2F17 /* ViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController2.h; sourceTree = "<group>"; };
+		D84493CA1847AF54003D2F17 /* ViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController2.m; sourceTree = "<group>"; };
 		D89A0690184665730014A4FD /* 1111.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1111.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,6 +136,10 @@
 				D826CFE818450F7300C5E495 /* AppDelegate.m */,
 				D826D00B184513E200C5E495 /* MainViewController.h */,
 				D826D00C184513E200C5E495 /* MainViewController.m */,
+				D84493C61847A867003D2F17 /* ViewController1.h */,
+				D84493C71847A867003D2F17 /* ViewController1.m */,
+				D84493C91847AF54003D2F17 /* ViewController2.h */,
+				D84493CA1847AF54003D2F17 /* ViewController2.m */,
 				D826D00E184513FA00C5E495 /* LeftViewController.h */,
 				D826D00F184513FA00C5E495 /* LeftViewController.m */,
 				D826D0111845141100C5E495 /* RightViewController.h */,
@@ -287,10 +297,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D84493C81847A867003D2F17 /* ViewController1.m in Sources */,
 				D826CFE918450F7300C5E495 /* AppDelegate.m in Sources */,
 				D826D010184513FA00C5E495 /* LeftViewController.m in Sources */,
 				D826D00A18450FDF00C5E495 /* SliderViewController.m in Sources */,
 				D826CFE518450F7300C5E495 /* main.m in Sources */,
+				D84493CB1847AF54003D2F17 /* ViewController2.m in Sources */,
 				D826D00D184513E200C5E495 /* MainViewController.m in Sources */,
 				D826D0131845141100C5E495 /* RightViewController.m in Sources */,
 			);
