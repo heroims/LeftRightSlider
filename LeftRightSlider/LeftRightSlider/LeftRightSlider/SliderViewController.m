@@ -269,7 +269,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     {
         CGFloat panX = [panGes translationInView:_mainContentView].x;
         CGFloat finalX = currentTranslateX + panX;
-        if (finalX > _RightSJudgeOffset)
+        if (finalX > _LeftSJudgeOffset)
         {
             CGAffineTransform conT = [self transformWithDirection:RMoveDirectionRight];
             [UIView beginAnimations:nil context:nil];
@@ -279,7 +279,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _tapGestureRec.enabled = YES;
             return;
         }
-        if (finalX < -_LeftSJudgeOffset)
+        if (finalX < -_RightSJudgeOffset)
         {
             CGAffineTransform conT = [self transformWithDirection:RMoveDirectionLeft];
             [UIView beginAnimations:nil context:nil];
@@ -309,12 +309,12 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     CGFloat transcale = 0;
     switch (direction) {
         case RMoveDirectionLeft:
-            translateX = -_LeftSContentOffset;
-            transcale = _LeftSContentScale;
+            translateX = -_RightSContentOffset;
+            transcale = _RightSContentScale;
             break;
         case RMoveDirectionRight:
-            translateX = _RightSContentOffset;
-            transcale = _RightSContentScale;
+            translateX = _LeftSContentOffset;
+            transcale = _LeftSContentScale;
             break;
         default:
             break;

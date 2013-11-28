@@ -19,7 +19,13 @@
     
     [SliderViewController sharedSliderController].LeftVC=[[LeftViewController alloc] init];
     [SliderViewController sharedSliderController].RightVC=[[RightViewController alloc] init];
-    
+    [SliderViewController sharedSliderController].RightSContentOffset=260;
+    [SliderViewController sharedSliderController].RightSContentScale=0.6;
+    [SliderViewController sharedSliderController].RightSOpenDuration=0.8;
+    [SliderViewController sharedSliderController].RightSCloseDuration=0.8;
+    [SliderViewController sharedSliderController].RightSJudgeOffset=160;
+
+
     self.window.rootViewController = [SliderViewController sharedSliderController];
 
     self.window.backgroundColor = [UIColor whiteColor];
