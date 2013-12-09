@@ -28,6 +28,7 @@
 		D84493C81847A867003D2F17 /* ViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = D84493C71847A867003D2F17 /* ViewController1.m */; };
 		D84493CB1847AF54003D2F17 /* ViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = D84493CA1847AF54003D2F17 /* ViewController2.m */; };
 		D89A0691184665730014A4FD /* 1111.png in Resources */ = {isa = PBXBuildFile; fileRef = D89A0690184665730014A4FD /* 1111.png */; };
+		D8D2239318562DBE00EF2DFB /* LRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D2239218562DBE00EF2DFB /* LRNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,8 @@
 		D84493C91847AF54003D2F17 /* ViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController2.h; sourceTree = "<group>"; };
 		D84493CA1847AF54003D2F17 /* ViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController2.m; sourceTree = "<group>"; };
 		D89A0690184665730014A4FD /* 1111.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1111.png; sourceTree = "<group>"; };
+		D8D2239118562DBE00EF2DFB /* LRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRNavigationController.h; sourceTree = "<group>"; };
+		D8D2239218562DBE00EF2DFB /* LRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRNavigationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,7 @@
 		D826CFDE18450F7300C5E495 /* LeftRightSlider */ = {
 			isa = PBXGroup;
 			children = (
+				D8D2239018562DBE00EF2DFB /* LRNavigationController */,
 				D826D00718450FC600C5E495 /* LeftRightSlider */,
 				D826CFE718450F7300C5E495 /* AppDelegate.h */,
 				D826CFE818450F7300C5E495 /* AppDelegate.m */,
@@ -197,6 +201,15 @@
 				D826D01B184650C600C5E495 /* 3333.png */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		D8D2239018562DBE00EF2DFB /* LRNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				D8D2239118562DBE00EF2DFB /* LRNavigationController.h */,
+				D8D2239218562DBE00EF2DFB /* LRNavigationController.m */,
+			);
+			path = LRNavigationController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,6 +317,7 @@
 				D826CFE518450F7300C5E495 /* main.m in Sources */,
 				D84493CB1847AF54003D2F17 /* ViewController2.m in Sources */,
 				D826D00D184513E200C5E495 /* MainViewController.m in Sources */,
+				D8D2239318562DBE00EF2DFB /* LRNavigationController.m in Sources */,
 				D826D0131845141100C5E495 /* RightViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

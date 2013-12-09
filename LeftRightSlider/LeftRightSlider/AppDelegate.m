@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -19,12 +20,12 @@
     [SliderViewController sharedSliderController].RightVC=[[RightViewController alloc] init];
     [SliderViewController sharedSliderController].RightSContentOffset=260;
     [SliderViewController sharedSliderController].RightSContentScale=0.6;
-    [SliderViewController sharedSliderController].RightSOpenDuration=0.8;
-    [SliderViewController sharedSliderController].RightSCloseDuration=0.8;
+    [SliderViewController sharedSliderController].RightSOpenDuration=0.6;
+    [SliderViewController sharedSliderController].RightSCloseDuration=0.6;
     [SliderViewController sharedSliderController].RightSJudgeOffset=160;
 
 
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
+    self.window.rootViewController = [[LRNavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

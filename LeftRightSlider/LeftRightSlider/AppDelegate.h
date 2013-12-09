@@ -10,6 +10,7 @@
 #import "SliderViewController.h"
 #import "LeftViewController.h"
 #import "RightViewController.h"
+#import "LRNavigationController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
