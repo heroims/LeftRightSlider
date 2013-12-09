@@ -28,9 +28,21 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 @implementation SliderViewController
 
-#if __has_feature(objc_arc)
-#else
 -(void)dealloc{
+#if __has_feature(objc_arc)
+    _mainContentView = nil;
+    _leftSideView = nil;
+    _rightSideView = nil;
+    
+    _controllersDict = nil;
+    
+    _tapGestureRec = nil;
+    _panGestureRec = nil;
+    
+    _LeftVC = nil;
+    _RightVC = nil;
+    _MainVC = nil;
+#else
     [_mainContentView release];
     [_leftSideView release];
     [_rightSideView release];
@@ -40,12 +52,13 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     [_tapGestureRec release];
     [_panGestureRec release];
     
-    [_leftVC release];
-    [_rightVC release];
+    [_LeftVC release];
+    [_RightVC release];
     [_MainVC release];
     [super dealloc];
-}
 #endif
+
+}
 
 + (SliderViewController*)sharedSliderController
 {

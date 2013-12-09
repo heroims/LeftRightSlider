@@ -39,18 +39,22 @@
     return self;
 }
 
-#if __has_feature(objc_arc)
-#else
 - (void)dealloc
 {
+#if __has_feature(objc_arc)
+    lastScreenShotView=nil;
+    blackMask=nil;
+    _screenShotsList=nil;
+    [_backgroundView removeFromSuperview];
+    _backgroundView=nil;
+#else
     [lastScreenShotView release];
     [blackMask release];
     [_screenShotsList release];
     [_backgroundView release];
     [super dealloc]
-    
-}
 #endif
+}
 
 - (void)viewDidLoad
 {
