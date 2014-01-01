@@ -37,6 +37,7 @@
         
         _startX=-200;
         _judgeOffset=50;
+        _contentScale=1;
     }
     return self;
 }
@@ -123,19 +124,21 @@
     frame.origin.x = x;
     self.view.frame = frame;
     
-    float alpha = 0.4 - (x/800);
+    float alpha = 0.4 - (x/1000);
 
     blackMask.alpha = alpha;
 
-    CGFloat aa = abs(startBackViewX)/[UIScreen mainScreen].bounds.size.width;
+    CGFloat aa = abs(_startX)/[UIScreen mainScreen].bounds.size.width;
     CGFloat y = x*aa;
 
-    CGFloat lastScreenShotViewHeight = [UIScreen mainScreen].bounds.size.height;
     
-    [lastScreenShotView setFrame:CGRectMake(startBackViewX+y,
-                                            0,
-                                            [UIScreen mainScreen].bounds.size.width,
-                                            lastScreenShotViewHeight)];
+    CGFloat lastScreenScale=_contentScale+x/self.view.frame.size.width*(1-_contentScale);
+    
+    [lastScreenShotView setFrame:CGRectMake(_startX+y+lastScreenShotView.superview.frame.size.width*(1-lastScreenScale)/2,
+                                            lastScreenShotView.superview.frame.size.height*(1-lastScreenScale)/2,
+                                            lastScreenShotView.superview.frame.size.width*lastScreenScale,
+                                            lastScreenShotView.superview.frame.size.height*lastScreenScale)];
+    NSLog(@"%f",lastScreenScale);
 }
 
 
@@ -187,14 +190,12 @@
         lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
 #endif
         
-        startBackViewX = _startX;
-        [lastScreenShotView setFrame:CGRectMake(startBackViewX,
+        [lastScreenShotView setFrame:CGRectMake(_startX,
                                                 lastScreenShotView.frame.origin.y,
                                                 lastScreenShotView.frame.size.width,
                                                 lastScreenShotView.frame.size.height)];
 
         [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
-        NSLog(@"555555");
 
         
     }else if (recoginzer.state == UIGestureRecognizerStateEnded){
@@ -213,8 +214,6 @@
                 
                 _isMoving = NO;
             }];
-            NSLog(@"444444");
-
         }
         else
         {
@@ -224,7 +223,6 @@
                 _isMoving = NO;
                 _backgroundView.hidden = YES;
             }];
-            NSLog(@"333333");
 
         }
         return;
@@ -237,13 +235,11 @@
             _isMoving = NO;
             _backgroundView.hidden = YES;
         }];
-        NSLog(@"2222222");
         return;
     }
     
     if (_isMoving) {
         [self moveViewWithX:touchPoint.x - startTouch.x];
-        NSLog(@"1111111-------%f-----%f",(touchPoint.x - startTouch.x)/self.view.frame.size.width ,self.view.frame.size.width);
     }
 }
 
