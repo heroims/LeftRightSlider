@@ -35,6 +35,8 @@
         _screenShotsList = [[NSMutableArray alloc]initWithCapacity:2];
         _canDragBack = YES;
         
+        _startX=-200;
+        _judgeOffset=50;
     }
     return self;
 }
@@ -114,7 +116,7 @@
 
 - (void)moveViewWithX:(float)x
 {
-    x = x>320?320:x;
+    x = x>self.view.frame.size.width?self.view.frame.size.width:x;
     x = x<0?0:x;
     
     CGRect frame = self.view.frame;
@@ -185,20 +187,23 @@
         lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
 #endif
         
-        startBackViewX = startX;
+        startBackViewX = _startX;
         [lastScreenShotView setFrame:CGRectMake(startBackViewX,
                                                 lastScreenShotView.frame.origin.y,
-                                                lastScreenShotView.frame.size.height,
-                                                lastScreenShotView.frame.size.width)];
+                                                lastScreenShotView.frame.size.width,
+                                                lastScreenShotView.frame.size.height)];
 
         [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
+        NSLog(@"555555");
+
         
     }else if (recoginzer.state == UIGestureRecognizerStateEnded){
         
-        if (touchPoint.x - startTouch.x > 50)
+        if (touchPoint.x - startTouch.x > _judgeOffset)
         {
             [UIView animateWithDuration:0.3 animations:^{
-                [self moveViewWithX:320];
+                [self moveViewWithX:self.view.frame.size.width];
+
             } completion:^(BOOL finished) {
                 
                 [self popViewControllerAnimated:NO];
@@ -208,6 +213,8 @@
                 
                 _isMoving = NO;
             }];
+            NSLog(@"444444");
+
         }
         else
         {
@@ -217,7 +224,8 @@
                 _isMoving = NO;
                 _backgroundView.hidden = YES;
             }];
-            
+            NSLog(@"333333");
+
         }
         return;
         
@@ -229,12 +237,13 @@
             _isMoving = NO;
             _backgroundView.hidden = YES;
         }];
-        
+        NSLog(@"2222222");
         return;
     }
     
     if (_isMoving) {
         [self moveViewWithX:touchPoint.x - startTouch.x];
+        NSLog(@"1111111-------%f-----%f",(touchPoint.x - startTouch.x)/self.view.frame.size.width ,self.view.frame.size.width);
     }
 }
 

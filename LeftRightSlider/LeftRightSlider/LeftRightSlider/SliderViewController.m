@@ -254,7 +254,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 sca = _RightSContentScale;
             }
         }
-        CGAffineTransform transS = CGAffineTransformMakeScale(1.0, sca);
+        CGAffineTransform transS = CGAffineTransformMakeScale(sca, sca);
         CGAffineTransform transT = CGAffineTransformMakeTranslation(transX, 0);
         
         CGAffineTransform conT = CGAffineTransformConcat(transT, transS);
@@ -317,7 +317,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     }
     
     CGAffineTransform transT = CGAffineTransformMakeTranslation(translateX, 0);
-    CGAffineTransform scaleT = CGAffineTransformMakeScale(1.0, transcale);
+    CGAffineTransform scaleT = CGAffineTransformMakeScale(transcale, transcale);
     CGAffineTransform conT = CGAffineTransformConcat(transT, scaleT);
     
     return conT;
