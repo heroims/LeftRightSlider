@@ -138,7 +138,6 @@
                                             lastScreenShotView.superview.frame.size.height*(1-lastScreenScale)/2,
                                             lastScreenShotView.superview.frame.size.width*lastScreenScale,
                                             lastScreenShotView.superview.frame.size.height*lastScreenScale)];
-    NSLog(@"%f",lastScreenScale);
 }
 
 
