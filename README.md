@@ -1,7 +1,7 @@
 LeftRightSlider
 ===============
 
-![Screenshot1](http://i.imgur.com/N6q2Uk8.gif "Screenshot1")
+![Screenshot1](http://i.imgur.com/N6q2Uk8.gif "Screenshot1") 
 ![Screenshot2](http://i.imgur.com/98Gwauw.gif "Screenshot2")
 
 
