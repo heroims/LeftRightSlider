@@ -49,9 +49,8 @@
 #else
     [lastScreenShotView release];
     [blackMask release];
-    [_screenShotsList release];
     [_backgroundView release];
-    [super dealloc]
+    [super dealloc];
 #endif
 }
 
