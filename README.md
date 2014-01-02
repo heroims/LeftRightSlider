@@ -1,7 +1,9 @@
 LeftRightSlider
 ===============
 
-![Screenshot](http://i.imgur.com/N6q2Uk8.gif "Screenshot")
+![Screenshot1](http://i.imgur.com/N6q2Uk8.gif "Screenshot1")
+![Screenshot2](http://i.imgur.com/98Gwauw.gif "Screenshot2")
+
 
 网易 ios7 左右拉动框架
 
