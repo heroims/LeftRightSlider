@@ -18,4 +18,8 @@
 
 @property (nonatomic, assign) float contentScale;
 
+- (void)popViewControllerWithLRAnimated;
+
+- (void)pushViewControllerWithLRAnimated:(UIViewController *)viewController;
+
 @end

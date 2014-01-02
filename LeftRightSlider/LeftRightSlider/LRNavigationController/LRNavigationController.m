@@ -19,7 +19,6 @@
 }
 
 @property (nonatomic,retain) UIView *backgroundView;
-@property (nonatomic,retain) NSMutableArray *screenShotsList;
 
 @property (nonatomic,assign) BOOL isMoving;
 
@@ -31,8 +30,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
-        _screenShotsList = [[NSMutableArray alloc]initWithCapacity:2];
         _canDragBack = YES;
         
         _startX=-200;
@@ -47,7 +44,6 @@
 #if __has_feature(objc_arc)
     lastScreenShotView=nil;
     blackMask=nil;
-    _screenShotsList=nil;
     [_backgroundView removeFromSuperview];
     _backgroundView=nil;
 #else
@@ -62,14 +58,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    UIImageView *shadowImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"leftside_shadow_bg"]];
-    shadowImageView.frame = CGRectMake(-10, 0, 10, self.view.frame.size.height);
-    [self.view addSubview:shadowImageView];
-#if __has_feature(objc_arc)
-#else
-    [shadowImageView release];
-#endif
     
     UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self
                                                                                 action:@selector(paningGestureReceive:)];
@@ -94,12 +82,147 @@
 
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
-    [_screenShotsList removeLastObject];
-    
     return [super popViewControllerAnimated:animated];
 }
 
-#pragma mark - Utility Methods 
+-(void)pushViewControllerWithLRAnimated:(UIViewController *)viewController{
+    [self pushViewController:viewController animated:NO];
+
+    _isMoving = YES;
+    
+    if (!_backgroundView)
+    {
+        CGRect frame = self.view.frame;
+        
+        if (self.navigationBar.translucent) {
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+        }
+        else{
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+            
+        }
+        blackMask.backgroundColor = [UIColor blackColor];
+        [_backgroundView addSubview:blackMask];
+    }
+    
+    _backgroundView.hidden = NO;
+    
+    if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
+    
+    UIGraphicsBeginImageContextWithOptions(((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.bounds.size, ((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.opaque, 0.0);
+    [((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    UIImage *lastScreenShot = img;
+    
+    
+#if __has_feature(objc_arc)
+    lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
+#else
+    if (lastScreenShotView!=nil) {
+        [lastScreenShotView release];
+        lastScreenShotView=nil;
+    }
+    lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
+#endif
+    
+    [lastScreenShotView setFrame:CGRectMake(_startX,
+                                            lastScreenShotView.frame.origin.y,
+                                            lastScreenShotView.frame.size.width,
+                                            lastScreenShotView.frame.size.height)];
+
+    [self moveViewWithX:self.view.frame.size.width];
+
+    [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
+
+    [UIView animateWithDuration:0.3 animations:^{
+        [self moveViewWithX:0];
+    } completion:^(BOOL finished) {
+        _isMoving = NO;
+        _backgroundView.hidden = YES;
+    }];
+
+}
+
+-(void)popViewControllerWithLRAnimated{
+    _isMoving = YES;
+    
+    if (!_backgroundView)
+    {
+        CGRect frame = self.view.frame;
+        
+        if (self.navigationBar.translucent) {
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+        }
+        else{
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+            
+        }
+        blackMask.backgroundColor = [UIColor blackColor];
+        [_backgroundView addSubview:blackMask];
+    }
+    
+    _backgroundView.hidden = NO;
+    
+    if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
+    
+    UIGraphicsBeginImageContextWithOptions(((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.bounds.size, ((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.opaque, 0.0);
+    [((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    UIImage *lastScreenShot = img;
+    
+    
+#if __has_feature(objc_arc)
+    lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
+#else
+    if (lastScreenShotView!=nil) {
+        [lastScreenShotView release];
+        lastScreenShotView=nil;
+    }
+    lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
+#endif
+    
+    [lastScreenShotView setFrame:CGRectMake(_startX,
+                                            lastScreenShotView.frame.origin.y,
+                                            lastScreenShotView.frame.size.width,
+                                            lastScreenShotView.frame.size.height)];
+    
+    [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
+
+    [UIView animateWithDuration:0.3 animations:^{
+        [self moveViewWithX:self.view.frame.size.width];
+        
+    } completion:^(BOOL finished) {
+        
+        [self popViewControllerAnimated:NO];
+        CGRect frame = self.view.frame;
+        frame.origin.x = 0;
+        self.view.frame = frame;
+        
+        _isMoving = NO;
+    }];
+}
+
+#pragma mark - Utility Methods
 
 - (void)moveViewWithX:(float)x
 {
@@ -127,12 +250,6 @@
 }
 
 
-
--(BOOL)isBlurryImg:(CGFloat)tmp
-{
-    return YES;
-}
-
 #pragma mark - Gesture Recognizer
 
 - (void)paningGestureReceive:(UIPanGestureRecognizer *)recoginzer
@@ -149,11 +266,20 @@
         if (!_backgroundView)
         {
             CGRect frame = self.view.frame;
-            
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
-            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
-            
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+
+            if (self.navigationBar.translucent) {
+                _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+                [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+                
+                blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            }
+            else{
+                _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+                [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+                
+                blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+                
+            }
             blackMask.backgroundColor = [UIColor blackColor];
             [_backgroundView addSubview:blackMask];
         }

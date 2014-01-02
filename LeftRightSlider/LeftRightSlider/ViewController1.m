@@ -71,11 +71,12 @@
 }
 
 -(void)btnPopClick:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    [(LRNavigationController*)self.navigationController popViewControllerWithLRAnimated];
 }
 
 -(void)btnNextClick:(id)sender{
-    [self.navigationController pushViewController:[[ViewController2 alloc] init] animated:YES];
+    [self.navigationController pushViewController:self animated:YES];
+//    [(LRNavigationController*)self.navigationController pushViewControllerWithLRAnimated:[[ViewController2 alloc] init]];
 }
 
 - (void)didReceiveMemoryWarning
