@@ -88,9 +88,7 @@
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    [_screenShotsList addObject:[self capture]];
-    
+{    
     [super pushViewController:viewController animated:animated];
 }
 
@@ -102,18 +100,6 @@
 }
 
 #pragma mark - Utility Methods 
-
-- (UIImage *)capture
-{
-    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0);
-    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    
-    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    return img;
-}
 
 - (void)moveViewWithX:(float)x
 {
@@ -176,9 +162,16 @@
         
         if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
         
-       
-        UIImage *lastScreenShot = [_screenShotsList lastObject];
+        UIGraphicsBeginImageContextWithOptions(((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.bounds.size, ((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.opaque, 0.0);
+        [((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.layer renderInContext:UIGraphicsGetCurrentContext()];
         
+        UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+        
+        UIGraphicsEndImageContext();
+
+        UIImage *lastScreenShot = img;
+        
+
 #if __has_feature(objc_arc)
         lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
 #else

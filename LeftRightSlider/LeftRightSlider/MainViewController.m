@@ -69,7 +69,9 @@
     [[SliderViewController sharedSliderController] rightItemClick];
 }
 -(void)btnNextClick:(id)sender{
-    [[SliderViewController sharedSliderController].navigationController pushViewController:[[ViewController1 alloc] init] animated:YES];
+    ViewController1 *sssss=[[ViewController1 alloc] init];
+    sssss.vvvvvv=self;
+    [[SliderViewController sharedSliderController].navigationController pushViewController:sssss animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

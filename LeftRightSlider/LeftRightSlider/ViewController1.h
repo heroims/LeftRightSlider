@@ -11,4 +11,6 @@
 
 @interface ViewController1 : UIViewController
 
+@property(nonatomic,retain)UIViewController *vvvvvv;
+
 @end

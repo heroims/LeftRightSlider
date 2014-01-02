@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     self.view.backgroundColor=[UIColor redColor];
     
     UIButton *btnNext=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -47,7 +47,27 @@
     [btnPop addTarget:self action:@selector(btnPopClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btnPop];
 
+    UIButton *btnChangeLast=[UIButton buttonWithType:UIButtonTypeCustom];
+    btnChangeLast.layer.borderColor=[[UIColor whiteColor] CGColor];
+    btnChangeLast.layer.borderWidth=2;
+    [btnChangeLast setTitle:@"ChangeLast" forState:UIControlStateNormal];
+    [btnChangeLast setFrame:CGRectMake(0, 0, 100, 50)];
+    btnChangeLast.center=CGPointMake(self.view.center.x, self.view.center.y+60);
+    [btnChangeLast addTarget:self action:@selector(btnChangeLastClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btnChangeLast];
+
+    
 	// Do any additional setup after loading the view.
+}
+
+-(void)btnChangeLastClick{
+    UIView *view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    view.backgroundColor=[UIColor redColor];
+    view.center=CGPointMake(_vvvvvv.view.center.x, _vvvvvv.view.center.y+100);
+    [_vvvvvv.view addSubview:view];
+    
+    UIAlertView *alter=[[UIAlertView alloc] initWithTitle:@"" message:@"success" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+    [alter show];
 }
 
 -(void)btnPopClick:(id)sender{
