@@ -75,8 +75,8 @@
 }
 
 -(void)btnNextClick:(id)sender{
-    [self.navigationController pushViewController:self animated:YES];
-//    [(LRNavigationController*)self.navigationController pushViewControllerWithLRAnimated:[[ViewController2 alloc] init]];
+//    [self.navigationController pushViewController:[[ViewController2 alloc] init] animated:YES];
+    [(LRNavigationController*)self.navigationController pushViewControllerWithLRAnimated:[[ViewController2 alloc] init]];
 }
 
 - (void)didReceiveMemoryWarning

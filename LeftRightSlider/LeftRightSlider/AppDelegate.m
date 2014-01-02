@@ -24,8 +24,12 @@
     [SliderViewController sharedSliderController].RightSCloseDuration=0.6;
     [SliderViewController sharedSliderController].RightSJudgeOffset=160;
 
+    LRNavigationController *nav=[[LRNavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
+    nav.contentScale=1;
+    nav.judgeOffset=100;
+    nav.startX=-180;
 
-    self.window.rootViewController = [[LRNavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
+    self.window.rootViewController = nav;
 
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

@@ -135,15 +135,18 @@
     lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
 #endif
     
-    [lastScreenShotView setFrame:CGRectMake(_startX,
-                                            lastScreenShotView.frame.origin.y,
-                                            lastScreenShotView.frame.size.width,
-                                            lastScreenShotView.frame.size.height)];
+    [lastScreenShotView setFrame:CGRectMake(0,
+                                            0,
+                                            _backgroundView.frame.size.width,
+                                            _backgroundView.frame.size.height)];
 
-    [self moveViewWithX:self.view.frame.size.width];
+    CGRect frame = self.view.frame;
+    frame.origin.x = self.view.frame.size.width;
+    self.view.frame = frame;
 
     [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
 
+    
     [UIView animateWithDuration:0.3 animations:^{
         [self moveViewWithX:0];
     } completion:^(BOOL finished) {
