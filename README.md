@@ -12,3 +12,25 @@ LeftRightSlider
 LeftRightSlider文件夹为左右滑动框架
 
 LRNavigationController文件夹为视差推出框架
+
+## Minimum Requirement
+iOS 5.0
+
+## Installation
+
+### via CocoaPods
+Install CocoaPods if you do not have it:-
+````
+$ [sudo] gem install cocoapods
+$ pod setup
+````
+Create Podfile:-
+````
+$ edit Podfile
+platform :ios, '5.0'
+pod 'LRNavigationController',  '~> 1.0.0'
+pod 'SliderViewController',  '~> 1.0.0'
+$ pod install
+````
+Use the Xcode workspace instead of the project from now on.
+
