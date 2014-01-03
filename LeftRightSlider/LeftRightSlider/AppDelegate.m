@@ -25,9 +25,9 @@
     [SliderViewController sharedSliderController].RightSJudgeOffset=160;
 
     LRNavigationController *nav=[[LRNavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
-    nav.contentScale=1;
+    nav.contentScale=0.8;
     nav.judgeOffset=100;
-    nav.startX=-180;
+    nav.startX=0;
 
     self.window.rootViewController = nav;
 
