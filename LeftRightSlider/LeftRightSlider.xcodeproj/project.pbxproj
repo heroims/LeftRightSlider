@@ -19,7 +19,6 @@
 		D826CFF418450F7300C5E495 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D826CFDC18450F7300C5E495 /* UIKit.framework */; };
 		D826CFFC18450F7300C5E495 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D826CFFA18450F7300C5E495 /* InfoPlist.strings */; };
 		D826CFFE18450F7300C5E495 /* LeftRightSliderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D826CFFD18450F7300C5E495 /* LeftRightSliderTests.m */; };
-		D826D00A18450FDF00C5E495 /* SliderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D826D00918450FDF00C5E495 /* SliderViewController.m */; };
 		D826D00D184513E200C5E495 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D826D00C184513E200C5E495 /* MainViewController.m */; };
 		D826D010184513FA00C5E495 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D826D00F184513FA00C5E495 /* LeftViewController.m */; };
 		D826D0131845141100C5E495 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D826D0121845141100C5E495 /* RightViewController.m */; };
@@ -29,6 +28,7 @@
 		D84493CB1847AF54003D2F17 /* ViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = D84493CA1847AF54003D2F17 /* ViewController2.m */; };
 		D89A0691184665730014A4FD /* 1111.png in Resources */ = {isa = PBXBuildFile; fileRef = D89A0690184665730014A4FD /* 1111.png */; };
 		D8D2239318562DBE00EF2DFB /* LRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D2239218562DBE00EF2DFB /* LRNavigationController.m */; };
+		D8E537A91879623D0013FD0F /* SliderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E537A81879623D0013FD0F /* SliderViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +58,6 @@
 		D826CFF918450F7300C5E495 /* LeftRightSliderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LeftRightSliderTests-Info.plist"; sourceTree = "<group>"; };
 		D826CFFB18450F7300C5E495 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D826CFFD18450F7300C5E495 /* LeftRightSliderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeftRightSliderTests.m; sourceTree = "<group>"; };
-		D826D00818450FDF00C5E495 /* SliderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderViewController.h; sourceTree = "<group>"; };
-		D826D00918450FDF00C5E495 /* SliderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderViewController.m; sourceTree = "<group>"; };
 		D826D00B184513E200C5E495 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		D826D00C184513E200C5E495 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		D826D00E184513FA00C5E495 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
@@ -75,6 +73,8 @@
 		D89A0690184665730014A4FD /* 1111.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1111.png; sourceTree = "<group>"; };
 		D8D2239118562DBE00EF2DFB /* LRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRNavigationController.h; sourceTree = "<group>"; };
 		D8D2239218562DBE00EF2DFB /* LRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRNavigationController.m; sourceTree = "<group>"; };
+		D8E537A71879623D0013FD0F /* SliderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderViewController.h; sourceTree = "<group>"; };
+		D8E537A81879623D0013FD0F /* SliderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,8 +134,8 @@
 		D826CFDE18450F7300C5E495 /* LeftRightSlider */ = {
 			isa = PBXGroup;
 			children = (
+				D8E537A61879623D0013FD0F /* SliderViewController */,
 				D8D2239018562DBE00EF2DFB /* LRNavigationController */,
-				D826D00718450FC600C5E495 /* LeftRightSlider */,
 				D826CFE718450F7300C5E495 /* AppDelegate.h */,
 				D826CFE818450F7300C5E495 /* AppDelegate.m */,
 				D826D00B184513E200C5E495 /* MainViewController.h */,
@@ -184,15 +184,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D826D00718450FC600C5E495 /* LeftRightSlider */ = {
-			isa = PBXGroup;
-			children = (
-				D826D00818450FDF00C5E495 /* SliderViewController.h */,
-				D826D00918450FDF00C5E495 /* SliderViewController.m */,
-			);
-			path = LeftRightSlider;
-			sourceTree = "<group>";
-		};
 		D826D01618464F2900C5E495 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +201,15 @@
 				D8D2239218562DBE00EF2DFB /* LRNavigationController.m */,
 			);
 			path = LRNavigationController;
+			sourceTree = "<group>";
+		};
+		D8E537A61879623D0013FD0F /* SliderViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D8E537A71879623D0013FD0F /* SliderViewController.h */,
+				D8E537A81879623D0013FD0F /* SliderViewController.m */,
+			);
+			path = SliderViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,11 +313,11 @@
 				D84493C81847A867003D2F17 /* ViewController1.m in Sources */,
 				D826CFE918450F7300C5E495 /* AppDelegate.m in Sources */,
 				D826D010184513FA00C5E495 /* LeftViewController.m in Sources */,
-				D826D00A18450FDF00C5E495 /* SliderViewController.m in Sources */,
 				D826CFE518450F7300C5E495 /* main.m in Sources */,
 				D84493CB1847AF54003D2F17 /* ViewController2.m in Sources */,
 				D826D00D184513E200C5E495 /* MainViewController.m in Sources */,
 				D8D2239318562DBE00EF2DFB /* LRNavigationController.m in Sources */,
+				D8E537A91879623D0013FD0F /* SliderViewController.m in Sources */,
 				D826D0131845141100C5E495 /* RightViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

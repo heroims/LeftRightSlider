@@ -100,7 +100,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     [self initChildControllers:_LeftVC rightVC:_RightVC];
     
-    [self showContentControllerWithModel:@"MainViewController"];
+    [self showContentControllerWithModel:_MainVC!=nil?NSStringFromClass([_MainVC class]):@"MainViewController"];
     
     _tapGestureRec = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSideBar)];
     _tapGestureRec.delegate=self;
