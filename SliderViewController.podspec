@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'SliderViewController'
-  s.version               = ‘1.1.0’
+  s.version               = '1.1.0'
   s.summary               = 'A new container controller to slide  '
   s.homepage              = 'https://github.com/heroims/LeftRightSlider'
   s.license               = { :type => 'MIT', :file => 'README.md' }
