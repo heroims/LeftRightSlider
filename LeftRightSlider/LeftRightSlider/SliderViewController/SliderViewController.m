@@ -71,6 +71,22 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     return sharedSVC;
 }
 
+- (id)initWithCoder:(NSCoder *)decoder {
+	if ((self = [super initWithCoder:decoder])) {
+        _LeftSContentOffset=160;
+        _RightSContentOffset=160;
+        _LeftSContentScale=0.85;
+        _RightSContentScale=0.85;
+        _LeftSJudgeOffset=100;
+        _RightSJudgeOffset=100;
+        _LeftSOpenDuration=0.4;
+        _RightSOpenDuration=0.4;
+        _LeftSCloseDuration=0.3;
+        _RightSCloseDuration=0.3;
+	}
+	return self;
+}
+
 - (id)init{
     if (self = [super init]){
         _LeftSContentOffset=160;
@@ -98,6 +114,13 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     [self initSubviews];
     
+    if (_LeftVC==nil) {
+        _LeftVC=[[NSClassFromString(@"LeftViewController") alloc] init];
+    }
+    if (_RightVC==nil) {
+        _RightVC=[[NSClassFromString(@"RightViewController") alloc] init];
+    }
+
     [self initChildControllers:_LeftVC rightVC:_RightVC];
     
     [self showContentControllerWithModel:_MainVC!=nil?NSStringFromClass([_MainVC class]):@"MainViewController"];
