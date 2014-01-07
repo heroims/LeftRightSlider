@@ -34,5 +34,3 @@ $ pod install
 ````
 Use the Xcode workspace instead of the project from now on.
 
-If you want to use 'storyboard'.You must create MainViewController,LeftViewController and RightViewController
-![Screenshot3](http://i.imgur.com/iLCbF0F.png "Screenshot3")
