@@ -32,7 +32,7 @@
 + (SliderViewController*)sharedSliderController;
 
 - (void)showContentControllerWithModel:(NSString*)className;
-- (void)leftItemClick;
-- (void)rightItemClick;
+- (void)showLeftViewController;
+- (void)showRightViewController;
 
 @end

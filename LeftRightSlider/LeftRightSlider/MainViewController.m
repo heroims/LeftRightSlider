@@ -63,10 +63,10 @@
 }
 
 -(void)leftItemClick{
-    [[SliderViewController sharedSliderController] leftItemClick];
+    [[SliderViewController sharedSliderController] showLeftViewController];
 }
 -(void)rightItemClick{
-    [[SliderViewController sharedSliderController] rightItemClick];
+    [[SliderViewController sharedSliderController] showRightViewController];
 }
 -(void)btnNextClick:(id)sender{
     ViewController1 *sssss=[[ViewController1 alloc] init];

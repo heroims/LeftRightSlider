@@ -192,7 +192,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     self.MainVC=controller;
 }
 
-- (void)leftItemClick
+- (void)showLeftViewController
 {
     CGAffineTransform conT = [self transformWithDirection:RMoveDirectionRight];
     
@@ -208,7 +208,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      }];
 }
 
-- (void)rightItemClick
+- (void)showRightViewController
 {
     CGAffineTransform conT = [self transformWithDirection:RMoveDirectionLeft];
     

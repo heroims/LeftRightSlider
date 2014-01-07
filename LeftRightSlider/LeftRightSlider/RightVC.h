@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RightViewController : UIViewController
+@interface RightVC : UIViewController
 
 @end

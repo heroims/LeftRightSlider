@@ -6,14 +6,14 @@
 //  Copyright (c) 2013年 Zhao Yiqi. All rights reserved.
 //
 
-#import "LeftViewController.h"
+#import "LeftVC.h"
 #import "SliderViewController.h"
 
-@interface LeftViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface LeftVC ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
 
-@implementation LeftViewController
+@implementation LeftVC
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

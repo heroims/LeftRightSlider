@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SliderViewController.h"
-#import "LeftViewController.h"
-#import "RightViewController.h"
 #import "LRNavigationController.h"
+#import "LeftVC.h"
+#import "RightVC.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

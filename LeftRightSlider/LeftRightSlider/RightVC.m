@@ -6,13 +6,13 @@
 //  Copyright (c) 2013年 Zhao Yiqi. All rights reserved.
 //
 
-#import "RightViewController.h"
+#import "RightVC.h"
 
-@interface RightViewController ()
+@interface RightVC ()
 
 @end
 
-@implementation RightViewController
+@implementation RightVC
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

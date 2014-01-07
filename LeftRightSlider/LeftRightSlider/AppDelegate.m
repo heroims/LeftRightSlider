@@ -16,8 +16,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    [SliderViewController sharedSliderController].LeftVC=[[LeftViewController alloc] init];
-    [SliderViewController sharedSliderController].RightVC=[[RightViewController alloc] init];
+    [SliderViewController sharedSliderController].LeftVC=[[LeftVC alloc] init];
+    [SliderViewController sharedSliderController].RightVC=[[RightVC alloc] init];
     [SliderViewController sharedSliderController].RightSContentOffset=260;
     [SliderViewController sharedSliderController].RightSContentScale=0.6;
     [SliderViewController sharedSliderController].RightSOpenDuration=0.6;
