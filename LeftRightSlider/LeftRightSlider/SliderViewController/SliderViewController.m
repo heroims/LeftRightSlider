@@ -109,7 +109,6 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     [super viewDidLoad];
     
     self.navigationController.navigationBarHidden=YES;
-    [self setWantsFullScreenLayout:YES];
 
     _controllersDict = [NSMutableDictionary dictionary];
     
