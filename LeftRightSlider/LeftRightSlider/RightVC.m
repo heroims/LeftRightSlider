@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     
-    UIImageView *imgV=[[UIImageView alloc] initWithFrame:self.view.bounds];
+    UIImageView *imgV=[[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [imgV setImage:[UIImage imageNamed:@"2222"]];
     [self.view addSubview:imgV];
 	// Do any additional setup after loading the view.

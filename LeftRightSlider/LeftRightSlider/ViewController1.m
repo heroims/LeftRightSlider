@@ -26,7 +26,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
+    self.wantsFullScreenLayout=YES;
+
     self.view.backgroundColor=[UIColor redColor];
     
     UIButton *btnNext=[UIButton buttonWithType:UIButtonTypeCustom];

@@ -83,6 +83,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         _RightSOpenDuration=0.4;
         _LeftSCloseDuration=0.3;
         _RightSCloseDuration=0.3;
+        _canShowLeft=YES;
+        _canShowRight=YES;
 	}
 	return self;
 }
@@ -99,6 +101,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         _RightSOpenDuration=0.4;
         _LeftSCloseDuration=0.3;
         _RightSCloseDuration=0.3;
+        _canShowLeft=YES;
+        _canShowRight=YES;
     }
         
     return self;
@@ -113,18 +117,17 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     _controllersDict = [NSMutableDictionary dictionary];
     
     [self initSubviews];
-    
-    if (_LeftVC==nil) {
-        _LeftVC=[[NSClassFromString(@"LeftViewController") alloc] init];
-    }
-    if (_RightVC==nil) {
-        _RightVC=[[NSClassFromString(@"RightViewController") alloc] init];
-    }
 
     [self initChildControllers:_LeftVC rightVC:_RightVC];
     
     [self showContentControllerWithModel:_MainVC!=nil?NSStringFromClass([_MainVC class]):@"MainViewController"];
     
+    if((self.wantsFullScreenLayout=_MainVC.wantsFullScreenLayout)){
+        _rightSideView.frame=[UIScreen mainScreen].bounds;
+        _leftSideView.frame=[UIScreen mainScreen].bounds;
+        _mainContentView.frame=[UIScreen mainScreen].bounds;
+    }
+
     _tapGestureRec = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSideBar)];
     _tapGestureRec.delegate=self;
     [self.view addGestureRecognizer:_tapGestureRec];
@@ -141,7 +144,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 {
     _rightSideView = [[UIView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:_rightSideView];
-
+    
     _leftSideView = [[UIView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:_leftSideView];
     
@@ -152,13 +155,16 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)initChildControllers:(UIViewController*)leftVC rightVC:(UIViewController*)rightVC
 {
-    [self addChildViewController:leftVC];
-    leftVC.view.frame=CGRectMake(0, 0, leftVC.view.frame.size.width, leftVC.view.frame.size.height);
-    [_leftSideView addSubview:leftVC.view];
-    
-    [self addChildViewController:rightVC];
-    rightVC.view.frame=CGRectMake(0, 0, rightVC.view.frame.size.width, rightVC.view.frame.size.height);
-    [_rightSideView addSubview:rightVC.view];
+    if (_canShowRight&&rightVC!=nil) {
+        [self addChildViewController:rightVC];
+        rightVC.view.frame=CGRectMake(0, 0, rightVC.view.frame.size.width, rightVC.view.frame.size.height);
+        [_rightSideView addSubview:rightVC.view];
+    }
+    if (_canShowLeft&&leftVC!=nil) {
+        [self addChildViewController:leftVC];
+        leftVC.view.frame=CGRectMake(0, 0, leftVC.view.frame.size.width, leftVC.view.frame.size.height);
+        [_leftSideView addSubview:leftVC.view];
+    }
 }
 
 #pragma mark - Actions
@@ -194,6 +200,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)showLeftViewController
 {
+    if (!_canShowLeft||_LeftVC==nil) {
+        return;
+    }
     CGAffineTransform conT = [self transformWithDirection:RMoveDirectionRight];
     
     [self.view sendSubviewToBack:_rightSideView];
@@ -210,6 +219,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)showRightViewController
 {
+    if (!_canShowRight||_RightVC==nil) {
+        return;
+    }
     CGAffineTransform conT = [self transformWithDirection:RMoveDirectionLeft];
     
     [self.view sendSubviewToBack:_leftSideView];
@@ -248,9 +260,13 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         CGFloat transX = [panGes translationInView:_mainContentView].x;
         transX = transX + currentTranslateX;
         
-        CGFloat sca;
+        CGFloat sca=0;
         if (transX > 0)
         {
+            if (!_canShowLeft||_LeftVC==nil) {
+                return;
+            }
+
             [self.view sendSubviewToBack:_rightSideView];
             [self configureViewShadowWithDirection:RMoveDirectionRight];
             
@@ -265,6 +281,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         }
         else    //transX < 0
         {
+            if (!_canShowRight||_RightVC==nil) {
+                return;
+            }
+
             [self.view sendSubviewToBack:_leftSideView];
             [self configureViewShadowWithDirection:RMoveDirectionLeft];
             
@@ -290,6 +310,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         CGFloat finalX = currentTranslateX + panX;
         if (finalX > _LeftSJudgeOffset)
         {
+            if (!_canShowLeft||_LeftVC==nil) {
+                return;
+            }
+
             CGAffineTransform conT = [self transformWithDirection:RMoveDirectionRight];
             [UIView beginAnimations:nil context:nil];
             _mainContentView.transform = conT;
@@ -300,6 +324,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         }
         if (finalX < -_RightSJudgeOffset)
         {
+            if (!_canShowRight||_RightVC==nil) {
+                return;
+            }
+
             CGAffineTransform conT = [self transformWithDirection:RMoveDirectionLeft];
             [UIView beginAnimations:nil context:nil];
             _mainContentView.transform = conT;

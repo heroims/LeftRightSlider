@@ -29,6 +29,9 @@
 @property(nonatomic,assign)float LeftSCloseDuration;
 @property(nonatomic,assign)float RightSCloseDuration;
 
+@property(nonatomic,assign)BOOL canShowLeft;
+@property(nonatomic,assign)BOOL canShowRight;
+
 + (SliderViewController*)sharedSliderController;
 
 - (void)showContentControllerWithModel:(NSString*)className;

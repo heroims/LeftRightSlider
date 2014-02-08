@@ -44,7 +44,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor purpleColor];
-    
+    self.wantsFullScreenLayout=YES;
+
     
     UIScrollView *bgV=[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 300)];
     bgV.contentSize=CGSizeMake(320*2, 300*2);

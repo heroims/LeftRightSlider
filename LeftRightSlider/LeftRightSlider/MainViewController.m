@@ -27,7 +27,10 @@
 {
     [super viewDidLoad];
 
-    UIImageView *imgV=[[UIImageView alloc] initWithFrame:self.view.bounds];
+    self.wantsFullScreenLayout=YES;
+    self.view.backgroundColor=[UIColor blueColor];
+
+    UIImageView *imgV=[[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [imgV setImage:[UIImage imageNamed:@"1111"]];
     [self.view addSubview:imgV];
     

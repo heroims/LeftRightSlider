@@ -13,21 +13,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
     [SliderViewController sharedSliderController].LeftVC=[[LeftVC alloc] init];
     [SliderViewController sharedSliderController].RightVC=[[RightVC alloc] init];
     [SliderViewController sharedSliderController].RightSContentOffset=260;
-    [SliderViewController sharedSliderController].RightSContentScale=0.6;
-    [SliderViewController sharedSliderController].RightSOpenDuration=0.6;
-    [SliderViewController sharedSliderController].RightSCloseDuration=0.6;
+    [SliderViewController sharedSliderController].RightSContentScale=0.68;
     [SliderViewController sharedSliderController].RightSJudgeOffset=160;
 
     LRNavigationController *nav=[[LRNavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
-    nav.contentScale=0.8;
+    nav.contentScale=1;
     nav.judgeOffset=100;
-    nav.startX=0;
+    nav.startX=-200;
 
     self.window.rootViewController = nav;
 

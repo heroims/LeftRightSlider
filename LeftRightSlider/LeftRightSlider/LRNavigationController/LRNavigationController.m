@@ -93,7 +93,7 @@
     {
         CGRect frame = self.view.frame;
         
-        if (self.navigationBar.translucent) {
+        if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
@@ -162,7 +162,7 @@
     {
         CGRect frame = self.view.frame;
         
-        if (self.navigationBar.translucent) {
+        if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
@@ -269,7 +269,7 @@
         {
             CGRect frame = self.view.frame;
 
-            if (self.navigationBar.translucent) {
+            if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
                 _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
                 [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
                 
