@@ -22,6 +22,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     UITapGestureRecognizer *_tapGestureRec;
     UIPanGestureRecognizer *_panGestureRec;
+    
+    BOOL showingLeft;
+    BOOL showingRight;
 }
 
 @end
@@ -114,7 +117,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     self.navigationController.navigationBarHidden=YES;
 
-    _controllersDict = [NSMutableDictionary dictionary];
+    _controllersDict = [[NSMutableDictionary alloc] init];
     
     [self initSubviews];
 
@@ -200,6 +203,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)showLeftViewController
 {
+    if (showingLeft) {
+        [self closeSideBar];
+        return;
+    }
     if (!_canShowLeft||_LeftVC==nil) {
         return;
     }
@@ -214,11 +221,16 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      }
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
+                         showingLeft=YES;
                      }];
 }
 
 - (void)showRightViewController
 {
+    if (showingRight) {
+        [self closeSideBar];
+        return;
+    }
     if (!_canShowRight||_RightVC==nil) {
         return;
     }
@@ -233,6 +245,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      }
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
+                         showingRight=YES;
                      }];
 }
 
@@ -245,6 +258,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      }
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = NO;
+                         showingRight=NO;
+                         showingLeft=NO;
                      }];
 }
 
@@ -319,6 +334,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _mainContentView.transform = conT;
             [UIView commitAnimations];
             
+            showingLeft=YES;
+
             _tapGestureRec.enabled = YES;
             return;
         }
@@ -333,6 +350,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _mainContentView.transform = conT;
             [UIView commitAnimations];
             
+            showingRight=YES;
+
             _tapGestureRec.enabled = YES;
             return;
         }
@@ -343,6 +362,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _mainContentView.transform = oriT;
             [UIView commitAnimations];
             
+            showingRight=NO;
+            showingLeft=NO;
+
             _tapGestureRec.enabled = NO;
         }
     }
