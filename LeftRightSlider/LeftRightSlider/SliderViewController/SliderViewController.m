@@ -222,6 +222,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
                          showingLeft=YES;
+                         _MainVC.view.userInteractionEnabled=NO;
                      }];
 }
 
@@ -246,6 +247,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
                          showingRight=YES;
+                         _MainVC.view.userInteractionEnabled=NO;
                      }];
 }
 
@@ -260,6 +262,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                          _tapGestureRec.enabled = NO;
                          showingRight=NO;
                          showingLeft=NO;
+                         _MainVC.view.userInteractionEnabled=YES;
                      }];
 }
 
@@ -335,6 +338,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             [UIView commitAnimations];
             
             showingLeft=YES;
+            _MainVC.view.userInteractionEnabled=NO;
 
             _tapGestureRec.enabled = YES;
             return;
@@ -351,6 +355,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             [UIView commitAnimations];
             
             showingRight=YES;
+            _MainVC.view.userInteractionEnabled=NO;
 
             _tapGestureRec.enabled = YES;
             return;
@@ -364,7 +369,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             
             showingRight=NO;
             showingLeft=NO;
-
+            _MainVC.view.userInteractionEnabled=YES;
             _tapGestureRec.enabled = NO;
         }
     }
