@@ -14,6 +14,8 @@
 @property(nonatomic,strong)UIViewController *RightVC;
 @property(nonatomic,strong)UIViewController *MainVC;
 
+@property(nonatomic,strong)NSMutableDictionary *controllersDict;
+
 @property(nonatomic,assign)float LeftSContentOffset;
 @property(nonatomic,assign)float RightSContentOffset;
 

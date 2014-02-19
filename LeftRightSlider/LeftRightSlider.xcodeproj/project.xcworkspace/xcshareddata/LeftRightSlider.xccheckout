@@ -5,14 +5,12 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>1C49C45D-56B5-490F-A706-8B9ED92DFCFF</string>
+	<string>44CA6F83-479A-416D-8DD8-397CAC0ABD47</string>
 	<key>IDESourceControlProjectName</key>
 	<string>LeftRightSlider</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>0433B373-F5B3-4D0D-80CE-91EDED184280</key>
-		<string>https://github.com/heroims/LeftRightSlider.git</string>
-		<key>8DA0F103-DB98-4657-BDFF-0D728EDBA043</key>
 		<string>https://github.com/heroims/LeftRightSlider.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
@@ -21,8 +19,6 @@
 	<dict>
 		<key>0433B373-F5B3-4D0D-80CE-91EDED184280</key>
 		<string>../../..</string>
-		<key>8DA0F103-DB98-4657-BDFF-0D728EDBA043</key>
-		<string>../../LeftRightSlider/LeftRightSlider</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/heroims/LeftRightSlider.git</string>
@@ -37,14 +33,6 @@
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>0433B373-F5B3-4D0D-80CE-91EDED184280</string>
-			<key>IDESourceControlWCCName</key>
-			<string>LeftRightSlider</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8DA0F103-DB98-4657-BDFF-0D728EDBA043</string>
 			<key>IDESourceControlWCCName</key>
 			<string>LeftRightSlider</string>
 		</dict>
