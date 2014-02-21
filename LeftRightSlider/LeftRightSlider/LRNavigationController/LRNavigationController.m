@@ -13,9 +13,9 @@
 {
     CGPoint startTouch;
     
-    UIImageView *lastScreenShotView;
+    UIView *lastScreenShotView;
     UIView *blackMask;
-
+    
 }
 
 @property (nonatomic,retain) UIView *backgroundView;
@@ -46,10 +46,12 @@
     blackMask=nil;
     [_backgroundView removeFromSuperview];
     _backgroundView=nil;
+    _unGestureDic=nil;
 #else
     [lastScreenShotView release];
     [blackMask release];
     [_backgroundView release];
+    [_unGestureDic release];
     [super dealloc];
 #endif
 }
@@ -58,14 +60,6 @@
 {
     [super viewDidLoad];
     
-    UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self
-                                                                                action:@selector(paningGestureReceive:)];
-    [recognizer delaysTouchesBegan];
-    [self.view addGestureRecognizer:recognizer];
-#if __has_feature(objc_arc)
-#else
-    [recognizer release];
-#endif
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,7 +69,7 @@
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-{    
+{
     [super pushViewController:viewController animated:animated];
 }
 
@@ -85,8 +79,20 @@
 }
 
 -(void)pushViewControllerWithLRAnimated:(UIViewController *)viewController{
+    
+    if (_unGestureDic==nil||[_unGestureDic valueForKey:NSStringFromClass([viewController class])]!=nil) {
+        UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self
+                                                                                    action:@selector(paningGestureReceive:)];
+        [recognizer delaysTouchesBegan];
+        [viewController.view addGestureRecognizer:recognizer];
+#if __has_feature(objc_arc)
+#else
+        [recognizer release];
+#endif
+    }
+    
     [self pushViewController:viewController animated:NO];
-
+    
     _isMoving = YES;
     
     if (!_backgroundView)
@@ -114,37 +120,29 @@
     
     if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
     
-    UIGraphicsBeginImageContextWithOptions(((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.bounds.size, ((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.opaque, 0.0);
-    [((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    
-    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    UIImage *lastScreenShot = img;
-    
-    
 #if __has_feature(objc_arc)
-    lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
+    lastScreenShotView = [[UIView alloc]init];
 #else
     if (lastScreenShotView!=nil) {
         [lastScreenShotView release];
         lastScreenShotView=nil;
     }
-    lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
+    lastScreenShotView = [[UIView alloc]init];
 #endif
+    
+    [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
     
     [lastScreenShotView setFrame:CGRectMake(0,
                                             0,
                                             _backgroundView.frame.size.width,
                                             _backgroundView.frame.size.height)];
-
+    
     CGRect frame = self.view.frame;
     frame.origin.x = self.view.frame.size.width;
     self.view.frame = frame;
-
+    
     [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
-
+    
     
     [UIView animateWithDuration:0.3 animations:^{
         [self moveViewWithX:0];
@@ -152,7 +150,7 @@
         _isMoving = NO;
         _backgroundView.hidden = YES;
     }];
-
+    
 }
 
 -(void)popViewControllerWithLRAnimated{
@@ -183,25 +181,17 @@
     
     if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
     
-    UIGraphicsBeginImageContextWithOptions(((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.bounds.size, ((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.opaque, 0.0);
-    [((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    
-    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    UIImage *lastScreenShot = img;
-    
-    
 #if __has_feature(objc_arc)
-    lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
+    lastScreenShotView = [[UIView alloc]init];
 #else
     if (lastScreenShotView!=nil) {
         [lastScreenShotView release];
         lastScreenShotView=nil;
     }
-    lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
+    lastScreenShotView = [[UIView alloc]init];
 #endif
+    
+    [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
     
     [lastScreenShotView setFrame:CGRectMake(_startX,
                                             lastScreenShotView.frame.origin.y,
@@ -209,7 +199,7 @@
                                             lastScreenShotView.frame.size.height)];
     
     [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
-
+    
     [UIView animateWithDuration:0.3 animations:^{
         [self moveViewWithX:self.view.frame.size.width];
         
@@ -236,12 +226,12 @@
     self.view.frame = frame;
     
     float alpha = 0.4 - (x/1000);
-
+    
     blackMask.alpha = alpha;
-
+    
     CGFloat aa = abs(_startX)/[UIScreen mainScreen].bounds.size.width;
     CGFloat y = x*aa;
-
+    
     
     CGFloat lastScreenScale=_contentScale+x/self.view.frame.size.width*(1-_contentScale);
     
@@ -268,7 +258,7 @@
         if (!_backgroundView)
         {
             CGRect frame = self.view.frame;
-
+            
             if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
                 _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
                 [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
@@ -290,33 +280,24 @@
         
         if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
         
-        UIGraphicsBeginImageContextWithOptions(((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.bounds.size, ((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.opaque, 0.0);
-        [((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view.layer renderInContext:UIGraphicsGetCurrentContext()];
-        
-        UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
-        
-        UIGraphicsEndImageContext();
-
-        UIImage *lastScreenShot = img;
-        
-
 #if __has_feature(objc_arc)
-        lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
+        lastScreenShotView = [[UIView alloc] init];
 #else
         if (lastScreenShotView!=nil) {
             [lastScreenShotView release];
             lastScreenShotView=nil;
         }
-        lastScreenShotView = [[UIImageView alloc]initWithImage:lastScreenShot];
+        lastScreenShotView = [[UIView alloc] init];
 #endif
         
+        [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
         [lastScreenShotView setFrame:CGRectMake(_startX,
                                                 lastScreenShotView.frame.origin.y,
                                                 lastScreenShotView.frame.size.width,
                                                 lastScreenShotView.frame.size.height)];
-
+        
         [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
-
+        
         
     }else if (recoginzer.state == UIGestureRecognizerStateEnded){
         
@@ -324,7 +305,7 @@
         {
             [UIView animateWithDuration:0.3 animations:^{
                 [self moveViewWithX:self.view.frame.size.width];
-
+                
             } completion:^(BOOL finished) {
                 
                 [self popViewControllerAnimated:NO];
@@ -343,7 +324,7 @@
                 _isMoving = NO;
                 _backgroundView.hidden = YES;
             }];
-
+            
         }
         return;
         

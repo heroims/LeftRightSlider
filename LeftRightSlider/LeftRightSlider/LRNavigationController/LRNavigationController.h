@@ -18,6 +18,8 @@
 
 @property (nonatomic, assign) float contentScale;
 
+@property (nonatomic, retain) NSDictionary *unGestureDic;
+
 - (void)popViewControllerWithLRAnimated;
 
 - (void)pushViewControllerWithLRAnimated:(UIViewController *)viewController;
