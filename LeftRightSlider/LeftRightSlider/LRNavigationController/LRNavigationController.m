@@ -80,7 +80,7 @@
 
 -(void)pushViewControllerWithLRAnimated:(UIViewController *)viewController{
     
-    if (_unGestureDic==nil||[_unGestureDic valueForKey:NSStringFromClass([viewController class])]!=nil) {
+    if (_unGestureDic==nil||[_unGestureDic valueForKey:NSStringFromClass([viewController class])]==nil) {
         UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self
                                                                                     action:@selector(paningGestureReceive:)];
         [recognizer delaysTouchesBegan];
