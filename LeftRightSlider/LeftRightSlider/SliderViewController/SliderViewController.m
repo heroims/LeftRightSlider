@@ -403,6 +403,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)configureViewShadowWithDirection:(RMoveDirection)direction
 {
+    if ([[CustomTools deviceWithNumString] hasPrefix:@"iPhone"]&&[[[CustomTools deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPhone" withString:@""] floatValue]<4) {
+        return;
+    }
     CGFloat shadowW;
     switch (direction)
     {
@@ -415,7 +418,6 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         default:
             break;
     }
-    
     _mainContentView.layer.shadowOffset = CGSizeMake(shadowW, 1.0);
     _mainContentView.layer.shadowColor = [UIColor blackColor].CGColor;
     _mainContentView.layer.shadowOpacity = 0.8f;
