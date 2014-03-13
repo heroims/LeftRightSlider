@@ -403,9 +403,16 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)configureViewShadowWithDirection:(RMoveDirection)direction
 {
-    if ([[CustomTools deviceWithNumString] hasPrefix:@"iPhone"]&&[[[CustomTools deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPhone" withString:@""] floatValue]<4) {
+    if ([[CustomTools deviceWithNumString] hasPrefix:@"iPhone"]&&[[[CustomTools deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPhone" withString:@""] floatValue]<40) {
         return;
     }
+    if ([[CustomTools deviceWithNumString] hasPrefix:@"iPod"]&&[[[CustomTools deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPod" withString:@""] floatValue]<40) {
+        return;
+    }
+    if ([[CustomTools deviceWithNumString] hasPrefix:@"iPad"]&&[[[CustomTools deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPad" withString:@""] floatValue]<25) {
+        return;
+    }
+
     CGFloat shadowW;
     switch (direction)
     {
