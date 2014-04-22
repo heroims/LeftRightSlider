@@ -7,6 +7,7 @@
 //
 
 #import "SliderViewController.h"
+#import <sys/utsname.h>
 
 typedef NS_ENUM(NSInteger, RMoveDirection) {
     RMoveDirectionLeft = 0,
@@ -401,15 +402,30 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     return conT;
 }
 
+- (NSString*)deviceWithNumString{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    NSString *deviceString = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    
+    @try {
+        return [deviceString stringByReplacingOccurrencesOfString:@"," withString:@""];
+    }
+    @catch (NSException *exception) {
+        return deviceString;
+    }
+    @finally {
+    }
+}
+
 - (void)configureViewShadowWithDirection:(RMoveDirection)direction
 {
-    if ([[CustomTools deviceWithNumString] hasPrefix:@"iPhone"]&&[[[CustomTools deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPhone" withString:@""] floatValue]<40) {
+    if ([[self deviceWithNumString] hasPrefix:@"iPhone"]&&[[[self deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPhone" withString:@""] floatValue]<40) {
         return;
     }
-    if ([[CustomTools deviceWithNumString] hasPrefix:@"iPod"]&&[[[CustomTools deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPod" withString:@""] floatValue]<40) {
+    if ([[self deviceWithNumString] hasPrefix:@"iPod"]&&[[[self deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPod" withString:@""] floatValue]<40) {
         return;
     }
-    if ([[CustomTools deviceWithNumString] hasPrefix:@"iPad"]&&[[[CustomTools deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPad" withString:@""] floatValue]<25) {
+    if ([[self deviceWithNumString] hasPrefix:@"iPad"]&&[[[self deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPad" withString:@""] floatValue]<25) {
         return;
     }
 
