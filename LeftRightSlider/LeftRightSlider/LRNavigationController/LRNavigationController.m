@@ -98,7 +98,8 @@
     if (!_backgroundView)
     {
         CGRect frame = self.view.frame;
-        
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#else
         if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
@@ -106,12 +107,23 @@
             blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
         }
         else{
+#endif
+#if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+#else
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
             blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
-            
+#endif
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#else
         }
+#endif
         blackMask.backgroundColor = [UIColor blackColor];
         [_backgroundView addSubview:blackMask];
     }
@@ -159,7 +171,8 @@
     if (!_backgroundView)
     {
         CGRect frame = self.view.frame;
-        
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#else
         if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
@@ -167,12 +180,22 @@
             blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
         }
         else{
+#endif
+#if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+#else
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
             blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
-            
+#endif
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#else
         }
+#endif
         blackMask.backgroundColor = [UIColor blackColor];
         [_backgroundView addSubview:blackMask];
     }
@@ -259,6 +282,8 @@
         {
             CGRect frame = self.view.frame;
             
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#else
             if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
                 _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
                 [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
@@ -266,12 +291,22 @@
                 blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
             }
             else{
+#endif
+#if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
+                _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+                [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+                
+                blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+#else
                 _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
                 [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
                 
                 blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
-                
+#endif
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#else
             }
+#endif
             blackMask.backgroundColor = [UIColor blackColor];
             [_backgroundView addSubview:blackMask];
         }

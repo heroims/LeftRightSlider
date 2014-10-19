@@ -40,4 +40,6 @@
 - (void)showLeftViewController;
 - (void)showRightViewController;
 
+- (void)moveViewWithGesture:(UIPanGestureRecognizer *)panGes;
+
 @end

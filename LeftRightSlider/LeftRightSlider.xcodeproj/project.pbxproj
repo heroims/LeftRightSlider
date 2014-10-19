@@ -13,7 +13,6 @@
 		D826CFE318450F7300C5E495 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D826CFE118450F7300C5E495 /* InfoPlist.strings */; };
 		D826CFE518450F7300C5E495 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D826CFE418450F7300C5E495 /* main.m */; };
 		D826CFE918450F7300C5E495 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D826CFE818450F7300C5E495 /* AppDelegate.m */; };
-		D826CFEB18450F7300C5E495 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D826CFEA18450F7300C5E495 /* Images.xcassets */; };
 		D826CFF218450F7300C5E495 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D826CFF118450F7300C5E495 /* XCTest.framework */; };
 		D826CFF318450F7300C5E495 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D826CFD818450F7300C5E495 /* Foundation.framework */; };
 		D826CFF418450F7300C5E495 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D826CFDC18450F7300C5E495 /* UIKit.framework */; };
@@ -52,7 +51,6 @@
 		D826CFE618450F7300C5E495 /* LeftRightSlider-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LeftRightSlider-Prefix.pch"; sourceTree = "<group>"; };
 		D826CFE718450F7300C5E495 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D826CFE818450F7300C5E495 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D826CFEA18450F7300C5E495 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D826CFF018450F7300C5E495 /* LeftRightSliderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeftRightSliderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D826CFF118450F7300C5E495 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D826CFF918450F7300C5E495 /* LeftRightSliderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LeftRightSliderTests-Info.plist"; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 				D826D0111845141100C5E495 /* RightVC.h */,
 				D826D0121845141100C5E495 /* RightVC.m */,
 				D826D01618464F2900C5E495 /* Images */,
-				D826CFEA18450F7300C5E495 /* Images.xcassets */,
 				D826CFDF18450F7300C5E495 /* Supporting Files */,
 			);
 			path = LeftRightSlider;
@@ -256,7 +253,7 @@
 		D826CFCD18450F7300C5E495 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = heroims;
 				TargetAttributes = {
 					D826CFEF18450F7300C5E495 = {
@@ -290,7 +287,6 @@
 				D826CFE318450F7300C5E495 /* InfoPlist.strings in Resources */,
 				D826D01C184650C600C5E495 /* 3333.png in Resources */,
 				D89A0691184665730014A4FD /* 1111.png in Resources */,
-				D826CFEB18450F7300C5E495 /* Images.xcassets in Resources */,
 				D826D01A1846508C00C5E495 /* 2222.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,7 +360,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -404,7 +399,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -437,7 +431,6 @@
 		D826D00218450F7300C5E495 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -454,7 +447,6 @@
 		D826D00318450F7300C5E495 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -471,7 +463,6 @@
 		D826D00518450F7300C5E495 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/LeftRightSlider.app/LeftRightSlider";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -494,7 +485,6 @@
 		D826D00618450F7300C5E495 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/LeftRightSlider.app/LeftRightSlider";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

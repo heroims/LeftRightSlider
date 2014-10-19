@@ -24,4 +24,6 @@
 
 - (void)pushViewControllerWithLRAnimated:(UIViewController *)viewController;
 
+- (void)paningGestureReceive:(UIPanGestureRecognizer *)recoginzer;
+
 @end
