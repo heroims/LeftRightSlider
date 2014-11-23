@@ -68,16 +68,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    [super pushViewController:viewController animated:animated];
-}
-
-- (UIViewController *)popViewControllerAnimated:(BOOL)animated
-{
-    return [super popViewControllerAnimated:animated];
-}
-
 -(void)pushViewControllerWithLRAnimated:(UIViewController *)viewController{
     
     if (_unGestureDic==nil||[_unGestureDic valueForKey:NSStringFromClass([viewController class])]==nil) {
@@ -101,18 +91,18 @@
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
 #else
         if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
         }
         else{
 #endif
 #if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
 #else
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
@@ -171,28 +161,28 @@
     if (!_backgroundView)
     {
         CGRect frame = self.view.frame;
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 #else
         if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
         }
         else{
 #endif
 #if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
 #else
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
             blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
 #endif
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 #else
         }
 #endif
@@ -213,7 +203,9 @@
     }
     lastScreenShotView = [[UIView alloc]init];
 #endif
-    
+    for (UIView *subView in lastScreenShotView.subviews) {
+        [subView removeFromSuperview];
+    }
     [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
     
     [lastScreenShotView setFrame:CGRectMake(_startX,
@@ -229,6 +221,81 @@
     } completion:^(BOOL finished) {
         
         [self popViewControllerAnimated:NO];
+        CGRect frame = self.view.frame;
+        frame.origin.x = 0;
+        self.view.frame = frame;
+        
+        _isMoving = NO;
+    }];
+}
+
+-(void)popToRootViewControllerWithLRAnimated{
+    _isMoving = YES;
+    
+    if (!_backgroundView)
+    {
+        CGRect frame = self.view.frame;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+#else
+        if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
+        }
+        else{
+#endif
+#if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
+#else
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+#endif
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+#else
+        }
+#endif
+        blackMask.backgroundColor = [UIColor blackColor];
+        [_backgroundView addSubview:blackMask];
+    }
+    
+    _backgroundView.hidden = NO;
+    
+    if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
+    
+#if __has_feature(objc_arc)
+    lastScreenShotView = [[UIView alloc]init];
+#else
+    if (lastScreenShotView!=nil) {
+        [lastScreenShotView release];
+        lastScreenShotView=nil;
+    }
+    lastScreenShotView = [[UIView alloc]init];
+#endif
+    for (UIView *subView in lastScreenShotView.subviews) {
+        [subView removeFromSuperview];
+    }
+    
+    [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
+    
+    [lastScreenShotView setFrame:CGRectMake(_startX,
+                                            lastScreenShotView.frame.origin.y,
+                                            lastScreenShotView.frame.size.width,
+                                            lastScreenShotView.frame.size.height)];
+    
+    [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        [self moveViewWithX:self.view.frame.size.width];
+        
+    } completion:^(BOOL finished) {
+        
+        [self popToRootViewControllerAnimated:NO];
         CGRect frame = self.view.frame;
         frame.origin.x = 0;
         self.view.frame = frame;
@@ -282,28 +349,28 @@
         {
             CGRect frame = self.view.frame;
             
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 #else
             if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
-                _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+                _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
                 [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
                 
-                blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+                blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
             }
             else{
 #endif
 #if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-                _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+                _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
                 [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
                 
-                blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height)];
+                blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
 #else
                 _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
                 [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
                 
                 blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
 #endif
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 #else
             }
 #endif
@@ -324,6 +391,9 @@
         }
         lastScreenShotView = [[UIView alloc] init];
 #endif
+        for (UIView *subView in lastScreenShotView.subviews) {
+            [subView removeFromSuperview];
+        }
         
         [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
         [lastScreenShotView setFrame:CGRectMake(_startX,
@@ -378,8 +448,6 @@
         [self moveViewWithX:touchPoint.x - startTouch.x];
     }
 }
-
-
 
 @end
 

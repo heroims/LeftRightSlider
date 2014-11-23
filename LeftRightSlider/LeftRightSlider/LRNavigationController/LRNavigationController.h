@@ -22,8 +22,8 @@
 
 - (void)popViewControllerWithLRAnimated;
 
-- (void)pushViewControllerWithLRAnimated:(UIViewController *)viewController;
+- (void)popToRootViewControllerWithLRAnimated;
 
-- (void)paningGestureReceive:(UIPanGestureRecognizer *)recoginzer;
+- (void)pushViewControllerWithLRAnimated:(UIViewController *)viewController;
 
 @end
