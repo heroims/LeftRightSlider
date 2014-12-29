@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A653DB31A50FC65000D4207 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A653DB21A50FC65000D4207 /* Images.xcassets */; };
 		D826CFD918450F7300C5E495 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D826CFD818450F7300C5E495 /* Foundation.framework */; };
 		D826CFDB18450F7300C5E495 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D826CFDA18450F7300C5E495 /* CoreGraphics.framework */; };
 		D826CFDD18450F7300C5E495 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D826CFDC18450F7300C5E495 /* UIKit.framework */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A653DB21A50FC65000D4207 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D826CFD518450F7300C5E495 /* LeftRightSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeftRightSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D826CFD818450F7300C5E495 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D826CFDA18450F7300C5E495 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -187,6 +189,7 @@
 				D89A0690184665730014A4FD /* 1111.png */,
 				D826D0191846508C00C5E495 /* 2222.png */,
 				D826D01B184650C600C5E495 /* 3333.png */,
+				5A653DB21A50FC65000D4207 /* Images.xcassets */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D826CFE318450F7300C5E495 /* InfoPlist.strings in Resources */,
+				5A653DB31A50FC65000D4207 /* Images.xcassets in Resources */,
 				D826D01C184650C600C5E495 /* 3333.png in Resources */,
 				D89A0691184665730014A4FD /* 1111.png in Resources */,
 				D826D01A1846508C00C5E495 /* 2222.png in Resources */,
@@ -431,7 +435,6 @@
 		D826D00218450F7300C5E495 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -447,7 +450,6 @@
 		D826D00318450F7300C5E495 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

@@ -10,29 +10,41 @@
 	<string>LeftRightSlider</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>E22BC763-5502-4579-AF51-329BB0073503</key>
+		<key>53AC55C64955D63A1655C01F9A5A09881658120F</key>
+		<string>ssh://10.127.3.11:29418/gcv2_mobile_ios</string>
+		<key>FBBB7985A5A187309A54361ADEA7B3687B582DCF</key>
 		<string>https://github.com/heroims/LeftRightSlider.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>LeftRightSlider/LeftRightSlider.xcodeproj/project.xcworkspace</string>
+	<string>LeftRightSlider/LeftRightSlider.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>E22BC763-5502-4579-AF51-329BB0073503</key>
+		<key>53AC55C64955D63A1655C01F9A5A09881658120F</key>
+		<string>../../../../..</string>
+		<key>FBBB7985A5A187309A54361ADEA7B3687B582DCF</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/heroims/LeftRightSlider.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E22BC763-5502-4579-AF51-329BB0073503</string>
+	<string>FBBB7985A5A187309A54361ADEA7B3687B582DCF</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>E22BC763-5502-4579-AF51-329BB0073503</string>
+			<string>53AC55C64955D63A1655C01F9A5A09881658120F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>..</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FBBB7985A5A187309A54361ADEA7B3687B582DCF</string>
 			<key>IDESourceControlWCCName</key>
 			<string>LeftRightSlider</string>
 		</dict>
