@@ -90,7 +90,7 @@
             [[SliderViewController sharedSliderController] showContentControllerWithModel:@"MainViewController"];
             break;
         case 1:
-            [[SliderViewController sharedSliderController] showContentControllerWithModel:@"RightViewController"];
+            [[SliderViewController sharedSliderController] showContentControllerWithModel:@"RightVC"];
             break;
         default:
             break;
