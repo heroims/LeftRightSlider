@@ -87,6 +87,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         _RightSOpenDuration=0.4;
         _LeftSCloseDuration=0.3;
         _RightSCloseDuration=0.3;
+        _LeftStartX=0;
+        _RightStartX=0;
         _canShowLeft=YES;
         _canShowRight=YES;
 	}
@@ -105,6 +107,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         _RightSOpenDuration=0.4;
         _LeftSCloseDuration=0.3;
         _RightSCloseDuration=0.3;
+        _LeftStartX=0;
+        _RightStartX=0;
         _canShowLeft=YES;
         _canShowRight=YES;
     }
@@ -198,7 +202,6 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     controller.view.frame = _mainContentView.frame;
     [_mainContentView addSubview:controller.view];
-    
     self.MainVC=controller;
 }
 
@@ -215,9 +218,11 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     [self.view sendSubviewToBack:_rightSideView];
     [self configureViewShadowWithDirection:RMoveDirectionRight];
-    
+    _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+
     [UIView animateWithDuration:_LeftSOpenDuration
                      animations:^{
+                         _leftSideView.frame=CGRectMake(0, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
                          _mainContentView.transform = conT;
                      }
                      completion:^(BOOL finished) {
@@ -240,9 +245,11 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     [self.view sendSubviewToBack:_leftSideView];
     [self configureViewShadowWithDirection:RMoveDirectionLeft];
-    
+    _rightSideView.frame=CGRectMake(_RightStartX, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
+
     [UIView animateWithDuration:_RightSOpenDuration
                      animations:^{
+                         _rightSideView.frame=CGRectMake(0, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
                          _mainContentView.transform = conT;
                      }
                      completion:^(BOOL finished) {
@@ -258,6 +265,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     [UIView animateWithDuration:_mainContentView.transform.tx==_LeftSContentOffset?_LeftSCloseDuration:_RightSCloseDuration
                      animations:^{
                          _mainContentView.transform = oriT;
+                         _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+                         _rightSideView.frame=CGRectMake(_RightStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
                      }
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = NO;
@@ -288,7 +297,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
             [self.view sendSubviewToBack:_rightSideView];
             [self configureViewShadowWithDirection:RMoveDirectionRight];
-            
+            _rightSideView.frame=CGRectMake(_RightStartX, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
+
             if (_mainContentView.frame.origin.x < _LeftSContentOffset)
             {
                 sca = 1 - (_mainContentView.frame.origin.x/_LeftSContentOffset) * (1-_LeftSContentScale);
@@ -296,6 +306,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             else
             {
                 sca = _LeftSContentScale;
+            }
+            if (_LeftStartX!=0) {
+                _leftSideView.frame=CGRectMake((_LeftStartX+transX)>=0?0:(_LeftStartX+transX), 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
             }
         }
         else    //transX < 0
@@ -306,7 +319,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
             [self.view sendSubviewToBack:_leftSideView];
             [self configureViewShadowWithDirection:RMoveDirectionLeft];
-            
+            _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+
             if (_mainContentView.frame.origin.x > -_RightSContentOffset)
             {
                 sca = 1 - (-_mainContentView.frame.origin.x/_RightSContentOffset) * (1-_RightSContentScale);
@@ -314,6 +328,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             else
             {
                 sca = _RightSContentScale;
+            }
+            if (_RightStartX!=0) {
+                _rightSideView.frame=CGRectMake((_RightStartX+transX)>=0?0:(_RightStartX+transX), 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
             }
         }
         CGAffineTransform transS = CGAffineTransformMakeScale(sca, sca);

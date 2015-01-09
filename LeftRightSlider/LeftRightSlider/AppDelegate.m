@@ -19,10 +19,11 @@
     // Override point for customization after application launch.
     
     [SliderViewController sharedSliderController].LeftVC=[[LeftVC alloc] init];
+    
     [SliderViewController sharedSliderController].RightVC=[[RightVC alloc] init];
-    [SliderViewController sharedSliderController].RightSContentOffset=260;
+    [SliderViewController sharedSliderController].RightSContentOffset=280;
     [SliderViewController sharedSliderController].RightSContentScale=0.68;
-    [SliderViewController sharedSliderController].RightSJudgeOffset=160;
+    [SliderViewController sharedSliderController].RightSJudgeOffset=140;
 
     LRNavigationController *nav=[[LRNavigationController alloc] initWithRootViewController:[SliderViewController sharedSliderController]];
     nav.contentScale=1;
