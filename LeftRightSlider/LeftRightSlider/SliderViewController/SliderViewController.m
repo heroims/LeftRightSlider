@@ -391,6 +391,16 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _tapGestureRec.enabled = NO;
         }
     }
+    if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftWithGesture:)]) {
+        [_ldelegate sliderViewLeftWithGesture:panGes];
+    }
+    if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightWithGesture:)]) {
+        [_rdelegate sliderViewRightWithGesture:panGes];
+    }
+    if (_mdelegate!=nil&&[_mdelegate respondsToSelector:@selector(sliderViewMainWithGesture:)]) {
+        [_mdelegate sliderViewMainWithGesture:panGes];
+    }
+
 }
 
 #pragma mark -

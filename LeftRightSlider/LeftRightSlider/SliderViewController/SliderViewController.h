@@ -8,7 +8,29 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SliderViewControllerLeftDelegate <NSObject>
+
+-(void)sliderViewLeftWithGesture:(UIPanGestureRecognizer *)panGes;
+
+@end
+
+@protocol SliderViewControllerRightDelegate <NSObject>
+
+-(void)sliderViewRightWithGesture:(UIPanGestureRecognizer *)panGes;
+
+@end
+
+@protocol SliderViewControllerMainDelegate <NSObject>
+
+-(void)sliderViewMainWithGesture:(UIPanGestureRecognizer *)panGes;
+
+@end
+
 @interface SliderViewController : UIViewController
+
+@property(nonatomic,strong)id<SliderViewControllerLeftDelegate> ldelegate;
+@property(nonatomic,strong)id<SliderViewControllerRightDelegate> rdelegate;
+@property(nonatomic,strong)id<SliderViewControllerMainDelegate> mdelegate;
 
 @property(nonatomic,strong)UIViewController *LeftVC;
 @property(nonatomic,strong)UIViewController *RightVC;

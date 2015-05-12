@@ -319,7 +319,7 @@
     
     blackMask.alpha = alpha;
     
-    CGFloat aa = abs(_startX)/[UIScreen mainScreen].bounds.size.width;
+    CGFloat aa = fabsf(_startX)/[UIScreen mainScreen].bounds.size.width;
     CGFloat y = x*aa;
     
     
