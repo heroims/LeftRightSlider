@@ -130,11 +130,14 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     [self showContentControllerWithModel:_MainVC!=nil?NSStringFromClass([_MainVC class]):@"MainViewController"];
     
+#if  __IPHONE_OS_VERSION_MAX_ALLOWED<=__IPHONE_7
     if((self.wantsFullScreenLayout=_MainVC.wantsFullScreenLayout)){
         _rightSideView.frame=[UIScreen mainScreen].bounds;
         _leftSideView.frame=[UIScreen mainScreen].bounds;
         _mainContentView.frame=[UIScreen mainScreen].bounds;
     }
+#else
+#endif
 
     _tapGestureRec = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSideBar)];
     _tapGestureRec.delegate=self;
