@@ -22,7 +22,7 @@
 
 @property (nonatomic,assign) BOOL isMoving;
 
-@property (nonatomic,retain) UIImage *imgScreenShot;
+@property (nonatomic,retain) NSMutableArray *imgScreenShots;
 
 @end
 
@@ -49,13 +49,17 @@
     [_backgroundView removeFromSuperview];
     _backgroundView=nil;
     _unGestureDic=nil;
-    _imgScreenShot=nil;
+    if (_imgScreenShots!=nil) {
+        [_imgScreenShots removeAllObjects];
+        _imgScreenShots=nil;
+    }
 #else
     [lastScreenShotView release];
     [blackMask release];
     [_backgroundView release];
     [_unGestureDic release];
     if (_imgScreenShot!=nil) {
+        [_imgScreenShots removeAllObjects];
         [_imgScreenShot release];
     }
     [super dealloc];
@@ -78,8 +82,11 @@
     
     if (_isScreenShot) {
         UIGraphicsBeginImageContextWithOptions([UIApplication sharedApplication].keyWindow.frame.size, NO, [UIScreen mainScreen].scale);
-        [[UIApplication sharedApplication].keyWindow.layer renderInContext:UIGraphicsGetCurrentContext()];
-        _imgScreenShot = UIGraphicsGetImageFromCurrentImageContext();
+        [((UIWindow*)[[[UIApplication sharedApplication] windows] objectAtIndex:0]).layer renderInContext:UIGraphicsGetCurrentContext()];
+        if (_imgScreenShots==nil) {
+            _imgScreenShots=[[NSMutableArray alloc] init];
+        }
+        [_imgScreenShots addObject:UIGraphicsGetImageFromCurrentImageContext()];
         UIGraphicsEndImageContext();
     }
     
@@ -155,7 +162,7 @@
     }
 #endif
     if (_isScreenShot) {
-        [(UIImageView*)lastScreenShotView setImage:_imgScreenShot];
+        [(UIImageView*)lastScreenShotView setImage:[_imgScreenShots lastObject]];
     }
     else{
         [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
@@ -244,7 +251,9 @@
         [subView removeFromSuperview];
     }
     if (_isScreenShot) {
-        [(UIImageView*)lastScreenShotView setImage:_imgScreenShot];
+        [(UIImageView*)lastScreenShotView setImage:[_imgScreenShots lastObject]];
+        [_imgScreenShots removeLastObject];
+
     }
     else{
         [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
@@ -335,7 +344,8 @@
     }
     
     if (_isScreenShot) {
-        [(UIImageView*)lastScreenShotView setImage:_imgScreenShot];
+        [(UIImageView*)lastScreenShotView setImage:_imgScreenShots[0]];
+        [_imgScreenShots removeAllObjects];
     }
     else{
         [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
@@ -463,7 +473,8 @@
         }
         
         if (_isScreenShot) {
-            [(UIImageView*)lastScreenShotView setImage:_imgScreenShot];
+            [(UIImageView*)lastScreenShotView setImage:[_imgScreenShots lastObject]];
+            [_imgScreenShots removeLastObject];
         }
         else{
             [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];

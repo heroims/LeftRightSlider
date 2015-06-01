@@ -12,6 +12,8 @@
 	<dict>
 		<key>2D1209AF56FDBD916098D2EA7425C98DC07DEE7A</key>
 		<string>ssh://10.127.3.11:29418/mobile_ios</string>
+		<key>470062FCE2A494F29FE8D3F565F724F801B9953E</key>
+		<string>ssh://10.254.0.45:22222/~/mobile_iphone/heika.git</string>
 		<key>53AC55C64955D63A1655C01F9A5A09881658120F</key>
 		<string>ssh://10.127.3.11:29418/gcv2_mobile_ios</string>
 		<key>FBBB7985A5A187309A54361ADEA7B3687B582DCF</key>
@@ -22,6 +24,8 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2D1209AF56FDBD916098D2EA7425C98DC07DEE7A</key>
+		<string>../../../..</string>
+		<key>470062FCE2A494F29FE8D3F565F724F801B9953E</key>
 		<string>../../../../..</string>
 		<key>53AC55C64955D63A1655C01F9A5A09881658120F</key>
 		<string>../../../..</string>
@@ -40,6 +44,14 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2D1209AF56FDBD916098D2EA7425C98DC07DEE7A</string>
+			<key>IDESourceControlWCCName</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>53AC55C64955D63A1655C01F9A5A09881658120F</string>
 			<key>IDESourceControlWCCName</key>
 			<string></string>
@@ -48,7 +60,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>2D1209AF56FDBD916098D2EA7425C98DC07DEE7A</string>
+			<string>470062FCE2A494F29FE8D3F565F724F801B9953E</string>
 			<key>IDESourceControlWCCName</key>
 			<string>..</string>
 		</dict>
