@@ -10,19 +10,22 @@
 
 @protocol SliderViewControllerLeftDelegate <NSObject>
 
--(void)sliderViewLeftWithGesture:(UIPanGestureRecognizer *)panGes;
+-(void)sliderViewLeftFinish;
+-(void)sliderViewLeftCancel;
+-(void)sliderViewLeftWithPer:(float)per;
 
 @end
 
 @protocol SliderViewControllerRightDelegate <NSObject>
 
--(void)sliderViewRightWithGesture:(UIPanGestureRecognizer *)panGes;
+-(void)sliderViewRightFinish;
+-(void)sliderViewRightCancel;
+-(void)sliderViewRightWithPer:(float)per;
 
 @end
 
 @protocol SliderViewControllerMainDelegate <NSObject>
 
--(void)sliderViewMainWithGesture:(UIPanGestureRecognizer *)panGes;
 
 @end
 

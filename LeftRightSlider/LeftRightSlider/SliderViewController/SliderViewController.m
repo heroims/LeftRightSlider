@@ -233,6 +233,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                          showingLeft=YES;
                          _MainVC.view.userInteractionEnabled=NO;
                      }];
+    
+    if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftFinish)]) {
+        [_ldelegate sliderViewLeftFinish];
+    }
 }
 
 - (void)showRightViewController
@@ -260,6 +264,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                          showingRight=YES;
                          _MainVC.view.userInteractionEnabled=NO;
                      }];
+    
+    if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightFinish)]) {
+        [_rdelegate sliderViewRightFinish];
+    }
 }
 
 - (void)closeSideBar
@@ -277,6 +285,13 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                          showingLeft=NO;
                          _MainVC.view.userInteractionEnabled=YES;
                      }];
+    if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftCancel)]) {
+        [_ldelegate sliderViewLeftCancel];
+    }
+    if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightCancel)]) {
+        [_rdelegate sliderViewRightCancel];
+    }
+
 }
 
 - (void)moveViewWithGesture:(UIPanGestureRecognizer *)panGes
@@ -313,6 +328,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             if (_LeftStartX!=0) {
                 _leftSideView.frame=CGRectMake((_LeftStartX+transX)>=0?0:(_LeftStartX+transX), 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
             }
+            if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftWithPer:)]) {
+                [_ldelegate sliderViewLeftWithPer:transX/_LeftSContentOffset];
+            }
         }
         else    //transX < 0
         {
@@ -334,6 +352,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             }
             if (_RightStartX!=0) {
                 _rightSideView.frame=CGRectMake((_RightStartX+transX)>=0?0:(_RightStartX+transX), 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
+            }
+            if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightWithPer:)]) {
+                [_rdelegate sliderViewRightWithPer:transX/_RightSContentOffset];
             }
         }
         CGAffineTransform transS = CGAffineTransformMakeScale(sca, sca);
@@ -358,6 +379,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _mainContentView.transform = conT;
             [UIView commitAnimations];
             
+            if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftFinish)]) {
+                [_ldelegate sliderViewLeftFinish];
+            }
+
             showingLeft=YES;
             _MainVC.view.userInteractionEnabled=NO;
 
@@ -375,6 +400,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _mainContentView.transform = conT;
             [UIView commitAnimations];
             
+            if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightFinish)]) {
+                [_rdelegate sliderViewRightFinish];
+            }
+
             showingRight=YES;
             _MainVC.view.userInteractionEnabled=NO;
 
@@ -388,22 +417,19 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _mainContentView.transform = oriT;
             [UIView commitAnimations];
             
+            if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftCancel)]) {
+                [_ldelegate sliderViewLeftCancel];
+            }
+            if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightCancel)]) {
+                [_rdelegate sliderViewRightCancel];
+            }
+
             showingRight=NO;
             showingLeft=NO;
             _MainVC.view.userInteractionEnabled=YES;
             _tapGestureRec.enabled = NO;
         }
     }
-    if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftWithGesture:)]) {
-        [_ldelegate sliderViewLeftWithGesture:panGes];
-    }
-    if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightWithGesture:)]) {
-        [_rdelegate sliderViewRightWithGesture:panGes];
-    }
-    if (_mdelegate!=nil&&[_mdelegate respondsToSelector:@selector(sliderViewMainWithGesture:)]) {
-        [_mdelegate sliderViewMainWithGesture:panGes];
-    }
-
 }
 
 #pragma mark -
