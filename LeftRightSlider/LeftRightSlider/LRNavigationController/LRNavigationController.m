@@ -22,6 +22,8 @@
 
 @property (nonatomic,assign) BOOL isMoving;
 
+@property (nonatomic,retain) UIImage *imgScreenShot;
+
 @end
 
 @implementation LRNavigationController
@@ -47,11 +49,15 @@
     [_backgroundView removeFromSuperview];
     _backgroundView=nil;
     _unGestureDic=nil;
+    _imgScreenShot=nil;
 #else
     [lastScreenShotView release];
     [blackMask release];
     [_backgroundView release];
     [_unGestureDic release];
+    if (_imgScreenShot!=nil) {
+        [_imgScreenShot release];
+    }
     [super dealloc];
 #endif
 }
@@ -69,6 +75,13 @@
 }
 
 -(void)pushViewControllerWithLRAnimated:(UIViewController *)viewController{
+    
+    if (_isScreenShot) {
+        UIGraphicsBeginImageContextWithOptions([UIApplication sharedApplication].keyWindow.frame.size, NO, [UIScreen mainScreen].scale);
+        [[UIApplication sharedApplication].keyWindow.layer renderInContext:UIGraphicsGetCurrentContext()];
+        _imgScreenShot = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
     
     if (_unGestureDic==nil||[_unGestureDic valueForKey:NSStringFromClass([viewController class])]==nil) {
         UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self
@@ -99,7 +112,7 @@
         else{
 #endif
 #if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height-([[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0)))];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
             blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
@@ -123,16 +136,30 @@
     if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
     
 #if __has_feature(objc_arc)
-    lastScreenShotView = [[UIView alloc]init];
+    if (_isScreenShot) {
+        lastScreenShotView = [[UIImageView alloc] init];
+    }
+    else{
+        lastScreenShotView = [[UIView alloc] init];
+    }
 #else
     if (lastScreenShotView!=nil) {
         [lastScreenShotView release];
         lastScreenShotView=nil;
     }
-    lastScreenShotView = [[UIView alloc]init];
+    if (_isScreenShot) {
+        lastScreenShotView = [[UIImageView alloc] init];
+    }
+    else{
+        lastScreenShotView = [[UIView alloc] init];
+    }
 #endif
-    
-    [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
+    if (_isScreenShot) {
+        [(UIImageView*)lastScreenShotView setImage:_imgScreenShot];
+    }
+    else{
+        [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
+    }
     
     [lastScreenShotView setFrame:CGRectMake(0,
                                             0,
@@ -195,18 +222,34 @@
     if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
     
 #if __has_feature(objc_arc)
-    lastScreenShotView = [[UIView alloc]init];
+    if (_isScreenShot) {
+        lastScreenShotView = [[UIImageView alloc] init];
+    }
+    else{
+        lastScreenShotView = [[UIView alloc] init];
+    }
 #else
     if (lastScreenShotView!=nil) {
         [lastScreenShotView release];
         lastScreenShotView=nil;
     }
-    lastScreenShotView = [[UIView alloc]init];
+    if (_isScreenShot) {
+        lastScreenShotView = [[UIImageView alloc] init];
+    }
+    else{
+        lastScreenShotView = [[UIView alloc] init];
+    }
 #endif
     for (UIView *subView in lastScreenShotView.subviews) {
         [subView removeFromSuperview];
     }
-    [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
+    if (_isScreenShot) {
+        [(UIImageView*)lastScreenShotView setImage:_imgScreenShot];
+    }
+    else{
+        [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
+    }
+
     
     [lastScreenShotView setFrame:CGRectMake(_startX,
                                             lastScreenShotView.frame.origin.y,
@@ -269,20 +312,34 @@
     if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
     
 #if __has_feature(objc_arc)
-    lastScreenShotView = [[UIView alloc]init];
+    if (_isScreenShot) {
+        lastScreenShotView = [[UIImageView alloc] init];
+    }
+    else{
+        lastScreenShotView = [[UIView alloc] init];
+    }
 #else
     if (lastScreenShotView!=nil) {
         [lastScreenShotView release];
         lastScreenShotView=nil;
     }
-    lastScreenShotView = [[UIView alloc]init];
+    if (_isScreenShot) {
+        lastScreenShotView = [[UIImageView alloc] init];
+    }
+    else{
+        lastScreenShotView = [[UIView alloc] init];
+    }
 #endif
     for (UIView *subView in lastScreenShotView.subviews) {
         [subView removeFromSuperview];
     }
     
-    [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
-    
+    if (_isScreenShot) {
+        [(UIImageView*)lastScreenShotView setImage:_imgScreenShot];
+    }
+    else{
+        [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
+    }
     [lastScreenShotView setFrame:CGRectMake(_startX,
                                             lastScreenShotView.frame.origin.y,
                                             lastScreenShotView.frame.size.width,
@@ -383,19 +440,35 @@
         if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
         
 #if __has_feature(objc_arc)
-        lastScreenShotView = [[UIView alloc] init];
+        if (_isScreenShot) {
+            lastScreenShotView = [[UIImageView alloc] init];
+        }
+        else{
+            lastScreenShotView = [[UIView alloc] init];
+        }
 #else
         if (lastScreenShotView!=nil) {
             [lastScreenShotView release];
             lastScreenShotView=nil;
         }
-        lastScreenShotView = [[UIView alloc] init];
+        if (_isScreenShot) {
+            lastScreenShotView = [[UIImageView alloc] init];
+        }
+        else{
+            lastScreenShotView = [[UIView alloc] init];
+        }
 #endif
         for (UIView *subView in lastScreenShotView.subviews) {
             [subView removeFromSuperview];
         }
         
-        [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
+        if (_isScreenShot) {
+            [(UIImageView*)lastScreenShotView setImage:_imgScreenShot];
+        }
+        else{
+            [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
+        }
+
         [lastScreenShotView setFrame:CGRectMake(_startX,
                                                 lastScreenShotView.frame.origin.y,
                                                 lastScreenShotView.frame.size.width,
