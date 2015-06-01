@@ -28,4 +28,6 @@
 
 - (void)pushViewControllerWithLRAnimated:(UIViewController *)viewController;
 
+- (void)pushViewControllerWithLRAnimated:(UIViewController *)viewController replaceIndex:(NSInteger)index;
+    
 @end
