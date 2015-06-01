@@ -191,12 +191,16 @@
     NSMutableArray *tmpViewControllers=[[NSMutableArray alloc] init];
     for (NSInteger i=0; i<index; i++) {
         [tmpViewControllers addObject:self.viewControllers[i]];
-        [tmpImgScreenShots addObject:_imgScreenShots[i]];
+        if (_isScreenShot) {
+            [tmpImgScreenShots addObject:_imgScreenShots[i]];
+        }
     }
     [tmpViewControllers addObject:viewController];
     
     self.viewControllers=[NSArray arrayWithArray:tmpViewControllers];
-    self.imgScreenShots=tmpImgScreenShots;
+    if (_isScreenShot) {
+        self.imgScreenShots=tmpImgScreenShots;
+    }
     
 #if __has_feature(objc_arc)
 #else
