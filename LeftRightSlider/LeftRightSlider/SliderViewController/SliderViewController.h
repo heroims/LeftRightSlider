@@ -66,6 +66,7 @@
 
 + (SliderViewController*)sharedSliderController;
 
+- (void)showContentControllerWithModel:(NSString *)className animated:(BOOL)animated;
 - (void)showContentControllerWithModel:(NSString*)className;
 - (void)showLeftViewController;
 - (void)showRightViewController;

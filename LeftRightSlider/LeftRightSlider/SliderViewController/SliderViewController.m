@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 #else
 #endif
 
-    _tapGestureRec = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSideBar)];
+    _tapGestureRec = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToClose)];
     _tapGestureRec.delegate=self;
     [self.view addGestureRecognizer:_tapGestureRec];
     _tapGestureRec.enabled = NO;
@@ -180,9 +180,37 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 #pragma mark - Actions
 
+- (void)showContentControllerWithModel:(NSString *)className animated:(BOOL)animated
+{
+    [self closeSideBar:animated];
+    
+    UIViewController *controller = _controllersDict[className];
+    if (!controller)
+    {
+        Class c = NSClassFromString(className);
+        
+#if __has_feature(objc_arc)
+        controller = [[c alloc] init];
+#else
+        controller = [[[c alloc] init] autorelease];
+#endif
+        [_controllersDict setObject:controller forKey:className];
+    }
+    
+    if (_mainContentView.subviews.count > 0)
+    {
+        UIView *view = [_mainContentView.subviews firstObject];
+        [view removeFromSuperview];
+    }
+    
+    controller.view.frame = _mainContentView.frame;
+    [_mainContentView addSubview:controller.view];
+    self.MainVC=controller;
+}
+
 - (void)showContentControllerWithModel:(NSString *)className
 {
-    [self closeSideBar];
+    [self closeSideBar:YES];
     
     UIViewController *controller = _controllersDict[className];
     if (!controller)
@@ -211,7 +239,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 - (void)showLeftViewController
 {
     if (showingLeft) {
-        [self closeSideBar];
+        [self closeSideBar:YES];
         return;
     }
     if (!_canShowLeft||_LeftVC==nil) {
@@ -242,7 +270,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 - (void)showRightViewController
 {
     if (showingRight) {
-        [self closeSideBar];
+        [self closeSideBar:YES];
         return;
     }
     if (!_canShowRight||_RightVC==nil) {
@@ -270,21 +298,32 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     }
 }
 
-- (void)closeSideBar
+- (void)closeSideBar:(BOOL)animated
 {
     CGAffineTransform oriT = CGAffineTransformIdentity;
-    [UIView animateWithDuration:_mainContentView.transform.tx==_LeftSContentOffset?_LeftSCloseDuration:_RightSCloseDuration
-                     animations:^{
-                         _mainContentView.transform = oriT;
-                         _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
-                         _rightSideView.frame=CGRectMake(_RightStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
-                     }
-                     completion:^(BOOL finished) {
-                         _tapGestureRec.enabled = NO;
-                         showingRight=NO;
-                         showingLeft=NO;
-                         _MainVC.view.userInteractionEnabled=YES;
-                     }];
+    if (animated) {
+        [UIView animateWithDuration:_mainContentView.transform.tx==_LeftSContentOffset?_LeftSCloseDuration:_RightSCloseDuration
+                         animations:^{
+                             _mainContentView.transform = oriT;
+                             _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+                             _rightSideView.frame=CGRectMake(_RightStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+                         }
+                         completion:^(BOOL finished) {
+                             _tapGestureRec.enabled = NO;
+                             showingRight=NO;
+                             showingLeft=NO;
+                             _MainVC.view.userInteractionEnabled=YES;
+                         }];
+    }
+    else{
+        _mainContentView.transform = oriT;
+        _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+        _rightSideView.frame=CGRectMake(_RightStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+        _tapGestureRec.enabled = NO;
+        showingRight=NO;
+        showingLeft=NO;
+        _MainVC.view.userInteractionEnabled=YES;
+    }
     if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftCancel)]) {
         [_ldelegate sliderViewLeftCancel];
     }
@@ -430,6 +469,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _tapGestureRec.enabled = NO;
         }
     }
+}
+
+-(void)tapToClose{
+    [self closeSideBar:YES];
 }
 
 #pragma mark -
