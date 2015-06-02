@@ -26,6 +26,8 @@
 
 @protocol SliderViewControllerMainDelegate <NSObject>
 
+-(void)sliderViewWillDisappear;
+-(void)sliderViewWillAppear;
 
 @end
 

@@ -511,4 +511,18 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     return  YES;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if (_mdelegate!=nil&&[_mdelegate respondsToSelector:@selector(sliderViewWillAppear)]) {
+        [_mdelegate sliderViewWillAppear];
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (_mdelegate!=nil&&[_mdelegate respondsToSelector:@selector(sliderViewWillDisappear)]) {
+        [_mdelegate sliderViewWillDisappear];
+    }
+}
+
 @end
