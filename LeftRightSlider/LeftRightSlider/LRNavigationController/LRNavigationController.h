@@ -24,6 +24,8 @@
 
 - (void)popViewControllerWithLRAnimated;
 
+- (void)popToViewControllerWithLRAnimated:(UIViewController*)vc;
+
 - (void)popToRootViewControllerWithLRAnimated;
 
 - (void)pushViewControllerWithLRAnimated:(UIViewController *)viewController;
