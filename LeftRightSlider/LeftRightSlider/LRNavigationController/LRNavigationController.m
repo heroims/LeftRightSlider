@@ -79,8 +79,9 @@
 }
 
 -(void)pushViewControllerWithLRAnimated:(UIViewController *)viewController replaceIndex:(NSInteger)index{
+    BOOL isUseScreenShots=[[NSBundle mainBundle] pathForResource:NSStringFromClass([self.visibleViewController class]) ofType:@"nib"]!=nil;
     
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         UIGraphicsBeginImageContextWithOptions([UIApplication sharedApplication].keyWindow.frame.size, NO, [UIScreen mainScreen].scale);
         [((UIWindow*)[[[UIApplication sharedApplication] windows] objectAtIndex:0]).layer renderInContext:UIGraphicsGetCurrentContext()];
         if (_imgScreenShots==nil) {
@@ -143,7 +144,7 @@
     if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
     
 #if __has_feature(objc_arc)
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         lastScreenShotView = [[UIImageView alloc] init];
     }
     else{
@@ -154,14 +155,14 @@
         [lastScreenShotView release];
         lastScreenShotView=nil;
     }
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         lastScreenShotView = [[UIImageView alloc] init];
     }
     else{
         lastScreenShotView = [[UIView alloc] init];
     }
 #endif
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         [(UIImageView*)lastScreenShotView setImage:[_imgScreenShots lastObject]];
     }
     else{
@@ -191,14 +192,14 @@
     NSMutableArray *tmpViewControllers=[[NSMutableArray alloc] init];
     for (NSInteger i=0; i<index; i++) {
         [tmpViewControllers addObject:self.viewControllers[i]];
-        if (_isScreenShot) {
+        if (isUseScreenShots) {
             [tmpImgScreenShots addObject:_imgScreenShots[i]];
         }
     }
     [tmpViewControllers addObject:viewController];
     
     self.viewControllers=[NSArray arrayWithArray:tmpViewControllers];
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         self.imgScreenShots=tmpImgScreenShots;
     }
     
@@ -211,8 +212,9 @@
 }
 
 -(void)pushViewControllerWithLRAnimated:(UIViewController *)viewController{
+    BOOL isUseScreenShots=[[NSBundle mainBundle] pathForResource:NSStringFromClass([self.visibleViewController class]) ofType:@"nib"]!=nil;
     
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         UIGraphicsBeginImageContextWithOptions([UIApplication sharedApplication].keyWindow.frame.size, NO, [UIScreen mainScreen].scale);
         [((UIWindow*)[[[UIApplication sharedApplication] windows] objectAtIndex:0]).layer renderInContext:UIGraphicsGetCurrentContext()];
         if (_imgScreenShots==nil) {
@@ -275,7 +277,7 @@
     if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
     
 #if __has_feature(objc_arc)
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         lastScreenShotView = [[UIImageView alloc] init];
     }
     else{
@@ -286,14 +288,15 @@
         [lastScreenShotView release];
         lastScreenShotView=nil;
     }
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         lastScreenShotView = [[UIImageView alloc] init];
     }
     else{
         lastScreenShotView = [[UIView alloc] init];
     }
 #endif
-    if (_isScreenShot) {
+    
+    if (isUseScreenShots) {
         [(UIImageView*)lastScreenShotView setImage:[_imgScreenShots lastObject]];
     }
     else{
@@ -322,6 +325,8 @@
 }
 
 -(void)popViewControllerWithLRAnimated{
+    BOOL isUseScreenShots=[[NSBundle mainBundle] pathForResource:NSStringFromClass([self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1] class]) ofType:@"nib"]!=nil;
+    
     _isMoving = YES;
     
     if (!_backgroundView)
@@ -361,7 +366,7 @@
     if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
     
 #if __has_feature(objc_arc)
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         lastScreenShotView = [[UIImageView alloc] init];
     }
     else{
@@ -372,7 +377,7 @@
         [lastScreenShotView release];
         lastScreenShotView=nil;
     }
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         lastScreenShotView = [[UIImageView alloc] init];
     }
     else{
@@ -382,7 +387,7 @@
     for (UIView *subView in lastScreenShotView.subviews) {
         [subView removeFromSuperview];
     }
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         [(UIImageView*)lastScreenShotView setImage:[_imgScreenShots lastObject]];
         lastScreenShotView.frame=CGRectMake(0, 0, ((UIImageView*)lastScreenShotView).image.size.width, ((UIImageView*)lastScreenShotView).image.size.height);
         [_imgScreenShots removeLastObject];
@@ -415,6 +420,8 @@
 }
 
 -(void)popToViewControllerWithLRAnimated:(UIViewController*)vc{
+    BOOL isUseScreenShots=[[NSBundle mainBundle] pathForResource:NSStringFromClass([vc class]) ofType:@"nib"]!=nil;
+    
     _isMoving = YES;
     
     if (!_backgroundView)
@@ -454,7 +461,7 @@
     if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
     
 #if __has_feature(objc_arc)
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         lastScreenShotView = [[UIImageView alloc] init];
     }
     else{
@@ -465,7 +472,7 @@
         [lastScreenShotView release];
         lastScreenShotView=nil;
     }
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         lastScreenShotView = [[UIImageView alloc] init];
     }
     else{
@@ -475,12 +482,12 @@
     for (UIView *subView in lastScreenShotView.subviews) {
         [subView removeFromSuperview];
     }
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         NSInteger index=[self.viewControllers indexOfObject:vc];
         [(UIImageView*)lastScreenShotView setImage:_imgScreenShots[index]];
         NSMutableArray *tmpImgScreenShots=[[NSMutableArray alloc] init];
         for (NSInteger i=0; i<index; i++) {
-            if (_isScreenShot) {
+            if (isUseScreenShots) {
                 [tmpImgScreenShots addObject:_imgScreenShots[i]];
             }
         }
@@ -520,6 +527,8 @@
 }
 
 -(void)popToRootViewControllerWithLRAnimated{
+    BOOL isUseScreenShots=[[NSBundle mainBundle] pathForResource:NSStringFromClass([self.viewControllers[0] class]) ofType:@"nib"]!=nil;
+    
     _isMoving = YES;
     
     if (!_backgroundView)
@@ -559,7 +568,7 @@
     if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
     
 #if __has_feature(objc_arc)
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         lastScreenShotView = [[UIImageView alloc] init];
     }
     else{
@@ -570,7 +579,7 @@
         [lastScreenShotView release];
         lastScreenShotView=nil;
     }
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         lastScreenShotView = [[UIImageView alloc] init];
     }
     else{
@@ -581,7 +590,7 @@
         [subView removeFromSuperview];
     }
     
-    if (_isScreenShot) {
+    if (isUseScreenShots) {
         [(UIImageView*)lastScreenShotView setImage:_imgScreenShots[0]];
         lastScreenShotView.frame=CGRectMake(0, 0, ((UIImageView*)lastScreenShotView).image.size.width, ((UIImageView*)lastScreenShotView).image.size.height);
         [_imgScreenShots removeAllObjects];
@@ -642,6 +651,8 @@
 
 - (void)paningGestureReceive:(UIPanGestureRecognizer *)recoginzer
 {
+    BOOL isUseScreenShots=[[NSBundle mainBundle] pathForResource:NSStringFromClass([self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1] class]) ofType:@"nib"]!=nil;
+    
     if (self.viewControllers.count <= 1 || !self.canDragBack) return;
     
     CGPoint touchPoint = [recoginzer locationInView:[UIApplication sharedApplication].keyWindow];
@@ -689,7 +700,7 @@
         if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
         
 #if __has_feature(objc_arc)
-        if (_isScreenShot) {
+        if (isUseScreenShots) {
             lastScreenShotView = [[UIImageView alloc] init];
         }
         else{
@@ -700,7 +711,7 @@
             [lastScreenShotView release];
             lastScreenShotView=nil;
         }
-        if (_isScreenShot) {
+        if (isUseScreenShots) {
             lastScreenShotView = [[UIImageView alloc] init];
         }
         else{
@@ -711,7 +722,7 @@
             [subView removeFromSuperview];
         }
         
-        if (_isScreenShot) {
+        if (isUseScreenShots) {
             [(UIImageView*)lastScreenShotView setImage:[_imgScreenShots lastObject]];
             lastScreenShotView.frame=CGRectMake(0, 0, ((UIImageView*)lastScreenShotView).image.size.width, ((UIImageView*)lastScreenShotView).image.size.height);
         }
