@@ -501,7 +501,7 @@
         
     }
     else{
-        [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:vc]-1]).view];
+        [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:vc]]).view];
     }
     
     
