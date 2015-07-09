@@ -64,6 +64,11 @@
 @property(nonatomic,assign)BOOL canShowLeft;
 @property(nonatomic,assign)BOOL canShowRight;
 
+@property(nonatomic,assign)float shadowOffsetWidth;
+@property(nonatomic,assign)float shadowOffsetHeight;
+@property(nonatomic,strong)UIColor *shadowColor;
+@property(nonatomic,assign)float shadowOpacity;
+
 + (SliderViewController*)sharedSliderController;
 
 - (void)showContentControllerWithModel:(NSString *)className animated:(BOOL)animated;

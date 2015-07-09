@@ -91,6 +91,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         _RightStartX=0;
         _canShowLeft=YES;
         _canShowRight=YES;
+        _shadowOffsetWidth=2.0;
+        _shadowOffsetHeight=1.0;
+        _shadowOpacity=0.8;
+        _shadowColor=[UIColor blackColor];
 	}
 	return self;
 }
@@ -111,8 +115,12 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         _RightStartX=0;
         _canShowLeft=YES;
         _canShowRight=YES;
+        _shadowOffsetWidth=2.0;
+        _shadowOffsetHeight=1.0;
+        _shadowOpacity=0.8;
+        _shadowColor=[UIColor blackColor];
     }
-        
+    
     return self;
 }
 
@@ -532,17 +540,17 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     switch (direction)
     {
         case RMoveDirectionLeft:
-            shadowW = 2.0f;
+            shadowW = _shadowOffsetWidth;
             break;
         case RMoveDirectionRight:
-            shadowW = -2.0f;
+            shadowW = -_shadowOffsetWidth;
             break;
         default:
             break;
     }
-    _mainContentView.layer.shadowOffset = CGSizeMake(shadowW, 1.0);
-    _mainContentView.layer.shadowColor = [UIColor blackColor].CGColor;
-    _mainContentView.layer.shadowOpacity = 0.8f;
+    _mainContentView.layer.shadowOffset = CGSizeMake(shadowW, _shadowOffsetHeight);
+    _mainContentView.layer.shadowColor = _shadowColor.CGColor;
+    _mainContentView.layer.shadowOpacity = _shadowOpacity;
 }
 
 
