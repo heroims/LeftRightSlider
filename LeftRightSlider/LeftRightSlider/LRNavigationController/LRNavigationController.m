@@ -596,7 +596,7 @@
         [_imgScreenShots removeAllObjects];
     }
     else{
-        [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
+        [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[0]).view];
     }
     [lastScreenShotView setFrame:CGRectMake(_startX,
                                             lastScreenShotView.frame.origin.y,
