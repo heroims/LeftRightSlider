@@ -153,7 +153,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     _tapGestureRec.enabled = NO;
     
     _panGestureRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGesture:)];
-    [_mainContentView addGestureRecognizer:_panGestureRec];
+    [self.view addGestureRecognizer:_panGestureRec];
     
 }
 
@@ -161,15 +161,14 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)initSubviews
 {
-    _rightSideView = [[UIView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:_rightSideView];
-    
-    _leftSideView = [[UIView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:_leftSideView];
-    
     _mainContentView = [[UIView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:_mainContentView];
 
+    _rightSideView = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    [self.view addSubview:_rightSideView];
+    
+    _leftSideView = [[UIView alloc] initWithFrame:CGRectMake(-self.view.bounds.size.width, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    [self.view addSubview:_leftSideView];
 }
 
 - (void)initChildControllers:(UIViewController*)leftVC rightVC:(UIViewController*)rightVC
@@ -253,21 +252,16 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     if (!_canShowLeft||_LeftVC==nil) {
         return;
     }
-    CGAffineTransform conT = [self transformWithDirection:RMoveDirectionRight];
     
-    [self.view sendSubviewToBack:_rightSideView];
-    [self configureViewShadowWithDirection:RMoveDirectionRight];
-    _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+    [self.view bringSubviewToFront:_leftSideView];
 
     [UIView animateWithDuration:_LeftSOpenDuration
                      animations:^{
                          _leftSideView.frame=CGRectMake(0, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
-                         _mainContentView.transform = conT;
                      }
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
                          showingLeft=YES;
-                         _MainVC.view.userInteractionEnabled=NO;
                      }];
     
     if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftFinish)]) {
@@ -284,21 +278,16 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     if (!_canShowRight||_RightVC==nil) {
         return;
     }
-    CGAffineTransform conT = [self transformWithDirection:RMoveDirectionLeft];
     
-    [self.view sendSubviewToBack:_leftSideView];
-    [self configureViewShadowWithDirection:RMoveDirectionLeft];
-    _rightSideView.frame=CGRectMake(_RightStartX, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
+    [self.view bringSubviewToFront:_rightSideView];
 
     [UIView animateWithDuration:_RightSOpenDuration
                      animations:^{
                          _rightSideView.frame=CGRectMake(0, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
-                         _mainContentView.transform = conT;
                      }
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
                          showingRight=YES;
-                         _MainVC.view.userInteractionEnabled=NO;
                      }];
     
     if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightFinish)]) {
@@ -308,29 +297,24 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)closeSideBar:(BOOL)animated
 {
-    CGAffineTransform oriT = CGAffineTransformIdentity;
     if (animated) {
         [UIView animateWithDuration:_mainContentView.transform.tx==_LeftSContentOffset?_LeftSCloseDuration:_RightSCloseDuration
                          animations:^{
-                             _mainContentView.transform = oriT;
-                             _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
-                             _rightSideView.frame=CGRectMake(_RightStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+                             _leftSideView.frame=CGRectMake(-_leftSideView.frame.size.width, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+                             _rightSideView.frame=CGRectMake(_rightSideView.frame.size.width, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
                          }
                          completion:^(BOOL finished) {
                              _tapGestureRec.enabled = NO;
                              showingRight=NO;
                              showingLeft=NO;
-                             _MainVC.view.userInteractionEnabled=YES;
                          }];
     }
     else{
-        _mainContentView.transform = oriT;
-        _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
-        _rightSideView.frame=CGRectMake(_RightStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+        _leftSideView.frame=CGRectMake(-_leftSideView.frame.size.width, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+        _rightSideView.frame=CGRectMake(_rightSideView.frame.size.width, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
         _tapGestureRec.enabled = NO;
         showingRight=NO;
         showingLeft=NO;
-        _MainVC.view.userInteractionEnabled=YES;
     }
     if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftCancel)]) {
         [_ldelegate sliderViewLeftCancel];
@@ -346,38 +330,29 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     static CGFloat currentTranslateX;
     if (panGes.state == UIGestureRecognizerStateBegan)
     {
-        currentTranslateX = _mainContentView.transform.tx;
+        currentTranslateX = self.view.transform.tx;
     }
     if (panGes.state == UIGestureRecognizerStateChanged)
     {
-        CGFloat transX = [panGes translationInView:_mainContentView].x;
+        CGFloat transX = [panGes translationInView:self.view].x;
         transX = transX + currentTranslateX;
         
-        CGFloat sca=0;
         if (transX > 0)
         {
             if (!_canShowLeft||_LeftVC==nil) {
                 return;
             }
+            [self.view bringSubviewToFront:_leftSideView];
+            if (_rightSideView.frame.origin.x>=_rightSideView.frame.size.width) {
+                _leftSideView.frame=CGRectMake(-_leftSideView.frame.size.width+transX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+                if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftWithPer:)]) {
+                    [_ldelegate sliderViewLeftWithPer:transX/_leftSideView.frame.size.width];
+                }
+            }
+            else{
+                _rightSideView.frame=CGRectMake(transX, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
+            }
 
-            [self.view sendSubviewToBack:_rightSideView];
-            [self configureViewShadowWithDirection:RMoveDirectionRight];
-            _rightSideView.frame=CGRectMake(_RightStartX, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
-
-            if (_mainContentView.frame.origin.x < _LeftSContentOffset)
-            {
-                sca = 1 - (_mainContentView.frame.origin.x/_LeftSContentOffset) * (1-_LeftSContentScale);
-            }
-            else
-            {
-                sca = _LeftSContentScale;
-            }
-            if (_LeftStartX!=0) {
-                _leftSideView.frame=CGRectMake((_LeftStartX+transX)>=0?0:(_LeftStartX+transX), 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
-            }
-            if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftWithPer:)]) {
-                [_ldelegate sliderViewLeftWithPer:transX/_LeftSContentOffset];
-            }
         }
         else    //transX < 0
         {
@@ -385,45 +360,30 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 return;
             }
 
-            [self.view sendSubviewToBack:_leftSideView];
-            [self configureViewShadowWithDirection:RMoveDirectionLeft];
-            _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
-
-            if (_mainContentView.frame.origin.x > -_RightSContentOffset)
-            {
-                sca = 1 - (-_mainContentView.frame.origin.x/_RightSContentOffset) * (1-_RightSContentScale);
+            [self.view bringSubviewToFront:_rightSideView];
+            if (_leftSideView.frame.origin.x<=-_leftSideView.frame.size.width) {
+                _rightSideView.frame=CGRectMake(_rightSideView.frame.size.width+transX, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
+                if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightWithPer:)]) {
+                    [_rdelegate sliderViewRightWithPer:-transX/_rightSideView.frame.size.width];
+                }
             }
-            else
-            {
-                sca = _RightSContentScale;
-            }
-            if (_RightStartX!=0) {
-                _rightSideView.frame=CGRectMake((_RightStartX+transX)>=0?0:(_RightStartX+transX), 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
-            }
-            if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightWithPer:)]) {
-                [_rdelegate sliderViewRightWithPer:transX/_RightSContentOffset];
+            else{
+                _leftSideView.frame=CGRectMake(transX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
             }
         }
-        CGAffineTransform transS = CGAffineTransformMakeScale(sca, sca);
-        CGAffineTransform transT = CGAffineTransformMakeTranslation(transX, 0);
-        
-        CGAffineTransform conT = CGAffineTransformConcat(transT, transS);
-        
-        _mainContentView.transform = conT;
     }
     else if (panGes.state == UIGestureRecognizerStateEnded)
     {
-        CGFloat panX = [panGes translationInView:_mainContentView].x;
+        CGFloat panX = [panGes translationInView:self.view].x;
         CGFloat finalX = currentTranslateX + panX;
-        if (finalX > _LeftSJudgeOffset)
+        if (finalX > _LeftSJudgeOffset&&_rightSideView.frame.origin.x>=_rightSideView.frame.size.width)
         {
             if (!_canShowLeft||_LeftVC==nil) {
                 return;
             }
 
-            CGAffineTransform conT = [self transformWithDirection:RMoveDirectionRight];
             [UIView beginAnimations:nil context:nil];
-            _mainContentView.transform = conT;
+            _leftSideView.frame=CGRectMake(0, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
             [UIView commitAnimations];
             
             if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftFinish)]) {
@@ -431,20 +391,17 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             }
 
             showingLeft=YES;
-            _MainVC.view.userInteractionEnabled=NO;
-
             _tapGestureRec.enabled = YES;
             return;
         }
-        if (finalX < -_RightSJudgeOffset)
+        if (finalX < -_RightSJudgeOffset&&_leftSideView.frame.origin.x<=-_leftSideView.frame.size.width)
         {
             if (!_canShowRight||_RightVC==nil) {
                 return;
             }
 
-            CGAffineTransform conT = [self transformWithDirection:RMoveDirectionLeft];
             [UIView beginAnimations:nil context:nil];
-            _mainContentView.transform = conT;
+            _rightSideView.frame=CGRectMake(0, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
             [UIView commitAnimations];
             
             if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightFinish)]) {
@@ -452,16 +409,14 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             }
 
             showingRight=YES;
-            _MainVC.view.userInteractionEnabled=NO;
-
             _tapGestureRec.enabled = YES;
             return;
         }
         else
         {
-            CGAffineTransform oriT = CGAffineTransformIdentity;
             [UIView beginAnimations:nil context:nil];
-            _mainContentView.transform = oriT;
+            _leftSideView.frame=CGRectMake(-_leftSideView.frame.size.width, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
+            _rightSideView.frame=CGRectMake(_rightSideView.frame.size.width, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
             [UIView commitAnimations];
             
             if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftCancel)]) {
@@ -473,7 +428,6 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
             showingRight=NO;
             showingLeft=NO;
-            _MainVC.view.userInteractionEnabled=YES;
             _tapGestureRec.enabled = NO;
         }
     }
@@ -523,36 +477,6 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     @finally {
     }
 }
-
-- (void)configureViewShadowWithDirection:(RMoveDirection)direction
-{
-    if ([[self deviceWithNumString] hasPrefix:@"iPhone"]&&[[[self deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPhone" withString:@""] floatValue]<40) {
-        return;
-    }
-    if ([[self deviceWithNumString] hasPrefix:@"iPod"]&&[[[self deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPod" withString:@""] floatValue]<40) {
-        return;
-    }
-    if ([[self deviceWithNumString] hasPrefix:@"iPad"]&&[[[self deviceWithNumString] stringByReplacingOccurrencesOfString:@"iPad" withString:@""] floatValue]<25) {
-        return;
-    }
-
-    CGFloat shadowW;
-    switch (direction)
-    {
-        case RMoveDirectionLeft:
-            shadowW = _shadowOffsetWidth;
-            break;
-        case RMoveDirectionRight:
-            shadowW = -_shadowOffsetWidth;
-            break;
-        default:
-            break;
-    }
-    _mainContentView.layer.shadowOffset = CGSizeMake(shadowW, _shadowOffsetHeight);
-    _mainContentView.layer.shadowColor = _shadowColor.CGColor;
-    _mainContentView.layer.shadowOpacity = _shadowOpacity;
-}
-
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {    
