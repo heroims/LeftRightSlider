@@ -339,11 +339,12 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         
         if (transX > 0)
         {
-            if (!_canShowLeft||_LeftVC==nil) {
-                return;
-            }
             [self.view bringSubviewToFront:_leftSideView];
             if (_rightSideView.frame.origin.x>=_rightSideView.frame.size.width) {
+                if (!_canShowLeft||_LeftVC==nil) {
+                    return;
+                }
+
                 _leftSideView.frame=CGRectMake(-_leftSideView.frame.size.width+transX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
                 if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftWithPer:)]) {
                     [_ldelegate sliderViewLeftWithPer:transX/_leftSideView.frame.size.width];
@@ -356,12 +357,13 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         }
         else    //transX < 0
         {
-            if (!_canShowRight||_RightVC==nil) {
-                return;
-            }
 
             [self.view bringSubviewToFront:_rightSideView];
             if (_leftSideView.frame.origin.x<=-_leftSideView.frame.size.width) {
+                if (!_canShowRight||_RightVC==nil) {
+                    return;
+                }
+
                 _rightSideView.frame=CGRectMake(_rightSideView.frame.size.width+transX, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
                 if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightWithPer:)]) {
                     [_rdelegate sliderViewRightWithPer:-transX/_rightSideView.frame.size.width];
