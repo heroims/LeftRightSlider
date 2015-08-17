@@ -377,9 +377,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     }
     else if (panGes.state == UIGestureRecognizerStateEnded)
     {
-        CGFloat panX = [panGes translationInView:self.view].x;
-        CGFloat finalX = currentTranslateX + panX;
-        if (finalX > _LeftSJudgeOffset&&_rightSideView.frame.origin.x>=_rightSideView.frame.size.width)
+        if (_leftSideView.frame.origin.x >(-_leftSideView.frame.size.width+_LeftSJudgeOffset)&&_rightSideView.frame.origin.x>=_rightSideView.frame.size.width)
         {
             if (!_canShowLeft||_LeftVC==nil) {
                 return;
@@ -397,7 +395,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             _tapGestureRec.enabled = YES;
             return;
         }
-        if (finalX < -_RightSJudgeOffset&&_leftSideView.frame.origin.x<=-_leftSideView.frame.size.width)
+        if (_rightSideView.frame.origin.y < (_rightSideView.frame.size.width-_RightSJudgeOffset)&&_leftSideView.frame.origin.x<=-_leftSideView.frame.size.width)
         {
             if (!_canShowRight||_RightVC==nil) {
                 return;
