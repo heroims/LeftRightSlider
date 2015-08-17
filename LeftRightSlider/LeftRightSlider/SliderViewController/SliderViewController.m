@@ -342,7 +342,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         {
             [self.view bringSubviewToFront:_leftSideView];
             if (_rightSideView.frame.origin.x>=_rightSideView.frame.size.width) {
-                if (!_canShowLeft||_LeftVC==nil||_leftSideView.frame.origin.x>=0) {
+                if (!_canShowLeft||_LeftVC==nil||_leftSideView.frame.origin.x>=0||showingLeft) {
                     return;
                 }
 
@@ -361,7 +361,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
             [self.view bringSubviewToFront:_rightSideView];
             if (_leftSideView.frame.origin.x<=-_leftSideView.frame.size.width) {
-                if (!_canShowRight||_RightVC==nil||_rightSideView.frame.origin.x<=0) {
+                if (!_canShowRight||_RightVC==nil||_rightSideView.frame.origin.x<=0||showingRight) {
                     return;
                 }
 
