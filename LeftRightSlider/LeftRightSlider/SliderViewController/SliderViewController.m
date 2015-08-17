@@ -328,6 +328,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 - (void)moveViewWithGesture:(UIPanGestureRecognizer *)panGes
 {
     static CGFloat currentTranslateX;
+
     if (panGes.state == UIGestureRecognizerStateBegan)
     {
         currentTranslateX = self.view.transform.tx;
@@ -341,7 +342,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         {
             [self.view bringSubviewToFront:_leftSideView];
             if (_rightSideView.frame.origin.x>=_rightSideView.frame.size.width) {
-                if (!_canShowLeft||_LeftVC==nil) {
+                if (!_canShowLeft||_LeftVC==nil||_leftSideView.frame.origin.x>=0) {
                     return;
                 }
 
@@ -360,7 +361,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
             [self.view bringSubviewToFront:_rightSideView];
             if (_leftSideView.frame.origin.x<=-_leftSideView.frame.size.width) {
-                if (!_canShowRight||_RightVC==nil) {
+                if (!_canShowRight||_RightVC==nil||_rightSideView.frame.origin.x<=0) {
                     return;
                 }
 
