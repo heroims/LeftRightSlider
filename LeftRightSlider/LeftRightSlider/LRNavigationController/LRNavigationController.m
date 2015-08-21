@@ -90,6 +90,12 @@
         [_imgScreenShots addObject:UIGraphicsGetImageFromCurrentImageContext()];
         UIGraphicsEndImageContext();
     }
+    else{
+        if (_imgScreenShots==nil) {
+            _imgScreenShots=[[NSMutableArray alloc] init];
+        }
+        [_imgScreenShots addObject:[NSNull null]];
+    }
     
     if (_unGestureDic==nil||[_unGestureDic valueForKey:NSStringFromClass([viewController class])]==nil) {
         UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self
@@ -222,6 +228,12 @@
         }
         [_imgScreenShots addObject:UIGraphicsGetImageFromCurrentImageContext()];
         UIGraphicsEndImageContext();
+    }
+    else{
+        if (_imgScreenShots==nil) {
+            _imgScreenShots=[[NSMutableArray alloc] init];
+        }
+        [_imgScreenShots addObject:[NSNull null]];
     }
     
     if (_unGestureDic==nil||[_unGestureDic valueForKey:NSStringFromClass([viewController class])]==nil) {
