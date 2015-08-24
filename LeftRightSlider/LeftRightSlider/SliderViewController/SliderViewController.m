@@ -253,6 +253,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         return;
     }
     
+    _mainContentView.userInteractionEnabled=NO;
     [self.view bringSubviewToFront:_leftSideView];
 
     [UIView animateWithDuration:_LeftSOpenDuration
@@ -262,6 +263,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
                          showingLeft=YES;
+                         _mainContentView.userInteractionEnabled=YES;
                      }];
     
     if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftFinish)]) {
@@ -279,6 +281,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         return;
     }
     
+    _mainContentView.userInteractionEnabled=NO;
     [self.view bringSubviewToFront:_rightSideView];
 
     [UIView animateWithDuration:_RightSOpenDuration
@@ -288,6 +291,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
                          showingRight=YES;
+                         _mainContentView.userInteractionEnabled=YES;
                      }];
     
     if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightFinish)]) {
