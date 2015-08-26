@@ -94,7 +94,7 @@
         if (_imgScreenShots==nil) {
             _imgScreenShots=[[NSMutableArray alloc] init];
         }
-        [_imgScreenShots addObject:[NSNull null]];
+        [_imgScreenShots addObject:[[UIImage alloc] init]];
     }
     
     if (_unGestureDic==nil||[_unGestureDic valueForKey:NSStringFromClass([viewController class])]==nil) {
@@ -233,7 +233,7 @@
         if (_imgScreenShots==nil) {
             _imgScreenShots=[[NSMutableArray alloc] init];
         }
-        [_imgScreenShots addObject:[NSNull null]];
+        [_imgScreenShots addObject:[[UIImage alloc] init]];
     }
     
     if (_unGestureDic==nil||[_unGestureDic valueForKey:NSStringFromClass([viewController class])]==nil) {
