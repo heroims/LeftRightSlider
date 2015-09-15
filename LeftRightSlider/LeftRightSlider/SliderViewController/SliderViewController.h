@@ -64,6 +64,9 @@
 @property(nonatomic,assign)BOOL canShowLeft;
 @property(nonatomic,assign)BOOL canShowRight;
 
+@property(nonatomic,assign)BOOL showingLeft;
+@property(nonatomic,assign)BOOL showingRight;
+
 @property(nonatomic,assign)float shadowOffsetWidth;
 @property(nonatomic,assign)float shadowOffsetHeight;
 @property(nonatomic,strong)UIColor *shadowColor;

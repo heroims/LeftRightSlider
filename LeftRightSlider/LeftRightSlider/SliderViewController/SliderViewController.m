@@ -24,8 +24,6 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     UITapGestureRecognizer *_tapGestureRec;
     UIPanGestureRecognizer *_panGestureRec;
     
-    BOOL showingLeft;
-    BOOL showingRight;
 }
 
 @end
@@ -245,7 +243,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)showLeftViewController
 {
-    if (showingLeft) {
+    if (_showingLeft) {
         [self closeSideBar:YES];
         return;
     }
@@ -262,7 +260,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      }
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
-                         showingLeft=YES;
+                         _showingLeft=YES;
                          _mainContentView.userInteractionEnabled=YES;
                      }];
     
@@ -273,7 +271,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)showRightViewController
 {
-    if (showingRight) {
+    if (_showingRight) {
         [self closeSideBar:YES];
         return;
     }
@@ -290,7 +288,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      }
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
-                         showingRight=YES;
+                         _showingRight=YES;
                          _mainContentView.userInteractionEnabled=YES;
                      }];
     
@@ -309,16 +307,16 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                          }
                          completion:^(BOOL finished) {
                              _tapGestureRec.enabled = NO;
-                             showingRight=NO;
-                             showingLeft=NO;
+                             _showingRight=NO;
+                             _showingLeft=NO;
                          }];
     }
     else{
         _leftSideView.frame=CGRectMake(-_leftSideView.frame.size.width, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
         _rightSideView.frame=CGRectMake(_rightSideView.frame.size.width, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
         _tapGestureRec.enabled = NO;
-        showingRight=NO;
-        showingLeft=NO;
+        _showingRight=NO;
+        _showingLeft=NO;
     }
     if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftCancel)]) {
         [_ldelegate sliderViewLeftCancel];
@@ -346,7 +344,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         {
             [self.view bringSubviewToFront:_leftSideView];
             if (_rightSideView.frame.origin.x>=_rightSideView.frame.size.width) {
-                if (!_canShowLeft||_LeftVC==nil||_leftSideView.frame.origin.x>=0||showingLeft) {
+                if (!_canShowLeft||_LeftVC==nil||_leftSideView.frame.origin.x>=0||_showingLeft) {
                     return;
                 }
 
@@ -365,7 +363,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
             [self.view bringSubviewToFront:_rightSideView];
             if (_leftSideView.frame.origin.x<=-_leftSideView.frame.size.width) {
-                if (!_canShowRight||_RightVC==nil||_rightSideView.frame.origin.x<=0||showingRight) {
+                if (!_canShowRight||_RightVC==nil||_rightSideView.frame.origin.x<=0||_showingRight) {
                     return;
                 }
 
@@ -395,7 +393,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 [_ldelegate sliderViewLeftFinish];
             }
 
-            showingLeft=YES;
+            _showingLeft=YES;
             _tapGestureRec.enabled = YES;
             return;
         }
@@ -413,7 +411,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 [_rdelegate sliderViewRightFinish];
             }
 
-            showingRight=YES;
+            _showingRight=YES;
             _tapGestureRec.enabled = YES;
             return;
         }
@@ -431,8 +429,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 [_rdelegate sliderViewRightCancel];
             }
 
-            showingRight=NO;
-            showingLeft=NO;
+            _showingRight=NO;
+            _showingLeft=NO;
             _tapGestureRec.enabled = NO;
         }
     }
