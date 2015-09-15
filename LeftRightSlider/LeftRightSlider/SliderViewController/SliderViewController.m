@@ -23,9 +23,6 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     UITapGestureRecognizer *_tapGestureRec;
     UIPanGestureRecognizer *_panGestureRec;
-    
-    BOOL showingLeft;
-    BOOL showingRight;
 }
 
 @end
@@ -246,7 +243,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)showLeftViewController
 {
-    if (showingLeft) {
+    if (_showingLeft) {
         [self closeSideBar:YES];
         return;
     }
@@ -266,7 +263,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      }
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
-                         showingLeft=YES;
+                         _showingLeft=YES;
                          _MainVC.view.userInteractionEnabled=NO;
                      }];
     
@@ -277,7 +274,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)showRightViewController
 {
-    if (showingRight) {
+    if (_showingRight) {
         [self closeSideBar:YES];
         return;
     }
@@ -297,7 +294,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                      }
                      completion:^(BOOL finished) {
                          _tapGestureRec.enabled = YES;
-                         showingRight=YES;
+                         _showingRight=YES;
                          _MainVC.view.userInteractionEnabled=NO;
                      }];
     
@@ -318,8 +315,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                          }
                          completion:^(BOOL finished) {
                              _tapGestureRec.enabled = NO;
-                             showingRight=NO;
-                             showingLeft=NO;
+                             _showingRight=NO;
+                             _showingLeft=NO;
                              _MainVC.view.userInteractionEnabled=YES;
                          }];
     }
@@ -328,8 +325,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
         _rightSideView.frame=CGRectMake(_RightStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
         _tapGestureRec.enabled = NO;
-        showingRight=NO;
-        showingLeft=NO;
+        _showingRight=NO;
+        _showingLeft=NO;
         _MainVC.view.userInteractionEnabled=YES;
     }
     if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftCancel)]) {
@@ -430,7 +427,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 [_ldelegate sliderViewLeftFinish];
             }
 
-            showingLeft=YES;
+            _showingLeft=YES;
             _MainVC.view.userInteractionEnabled=NO;
 
             _tapGestureRec.enabled = YES;
@@ -451,7 +448,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 [_rdelegate sliderViewRightFinish];
             }
 
-            showingRight=YES;
+            _showingRight=YES;
             _MainVC.view.userInteractionEnabled=NO;
 
             _tapGestureRec.enabled = YES;
@@ -471,8 +468,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 [_rdelegate sliderViewRightCancel];
             }
 
-            showingRight=NO;
-            showingLeft=NO;
+            _showingRight=NO;
+            _showingLeft=NO;
             _MainVC.view.userInteractionEnabled=YES;
             _tapGestureRec.enabled = NO;
         }
