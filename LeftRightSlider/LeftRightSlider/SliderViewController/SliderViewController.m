@@ -243,15 +243,20 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)showLeftViewController
 {
+    _mainContentView.userInteractionEnabled=NO;
+
     if (_showingLeft) {
         [self closeSideBar:YES];
+        _mainContentView.userInteractionEnabled=YES;
+
         return;
     }
     if (!_canShowLeft||_LeftVC==nil) {
+        _mainContentView.userInteractionEnabled=YES;
+
         return;
     }
     
-    _mainContentView.userInteractionEnabled=NO;
     [self.view bringSubviewToFront:_leftSideView];
 
     [UIView animateWithDuration:_LeftSOpenDuration
@@ -271,15 +276,19 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)showRightViewController
 {
+    _mainContentView.userInteractionEnabled=NO;
+
     if (_showingRight) {
         [self closeSideBar:YES];
+        _mainContentView.userInteractionEnabled=YES;
+
         return;
     }
     if (!_canShowRight||_RightVC==nil) {
+        _mainContentView.userInteractionEnabled=YES;
         return;
     }
     
-    _mainContentView.userInteractionEnabled=NO;
     [self.view bringSubviewToFront:_rightSideView];
 
     [UIView animateWithDuration:_RightSOpenDuration
@@ -331,8 +340,14 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 {
     static CGFloat currentTranslateX;
 
+    static CGFloat currentOriginLX;
+    static CGFloat currentOriginRX;
+
     if (panGes.state == UIGestureRecognizerStateBegan)
     {
+        currentOriginLX=_leftSideView.frame.origin.x;
+        currentOriginRX=_rightSideView.frame.origin.x;
+        
         currentTranslateX = self.view.transform.tx;
     }
     if (panGes.state == UIGestureRecognizerStateChanged)
@@ -354,6 +369,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 }
             }
             else{
+                if (currentOriginRX>=0) {
+                    return;
+                }
                 _rightSideView.frame=CGRectMake(transX, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
             }
 
@@ -373,12 +391,18 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 }
             }
             else{
+                if (currentOriginLX<=-375) {
+                    return;
+                }
                 _leftSideView.frame=CGRectMake(transX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
             }
         }
     }
     else if (panGes.state == UIGestureRecognizerStateEnded)
     {
+        currentOriginLX=0;
+        currentOriginRX=0;
+
         if (_leftSideView.frame.origin.x >(-_leftSideView.frame.size.width+_LeftSJudgeOffset)&&_rightSideView.frame.origin.x>=_rightSideView.frame.size.width)
         {
             if (!_canShowLeft||_LeftVC==nil) {
