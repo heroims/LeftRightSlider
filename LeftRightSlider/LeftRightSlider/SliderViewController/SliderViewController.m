@@ -391,7 +391,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 }
             }
             else{
-                if (currentOriginLX<=-375) {
+                if (currentOriginLX<=-[UIScreen mainScreen].bounds.size.width) {
                     return;
                 }
                 _leftSideView.frame=CGRectMake(transX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
