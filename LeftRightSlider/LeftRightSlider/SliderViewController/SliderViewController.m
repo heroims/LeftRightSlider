@@ -210,7 +210,19 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     controller.view.frame = _mainContentView.frame;
     [_mainContentView addSubview:controller.view];
+    
+    if (_showingLeft) {
+        [_LeftVC viewDidDisappear:YES];
+    }
+    if (_showingRight) {
+        [_RightVC viewDidDisappear:YES];
+    }
+    
     self.MainVC=controller;
+    
+    if (![_MainVC isKindOfClass:[controller class]]) {
+        [_MainVC viewDidAppear:YES];
+    }
 }
 
 - (void)showContentControllerWithModel:(NSString *)className
@@ -238,7 +250,19 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     controller.view.frame = _mainContentView.frame;
     [_mainContentView addSubview:controller.view];
+    
+    if (_showingLeft) {
+        [_LeftVC viewDidDisappear:YES];
+    }
+    if (_showingRight) {
+        [_RightVC viewDidDisappear:YES];
+    }
+    
     self.MainVC=controller;
+    
+    if (![_MainVC isKindOfClass:[controller class]]) {
+        [_MainVC viewDidAppear:YES];
+    }
 }
 
 - (void)showLeftViewController
@@ -256,6 +280,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     [self configureViewShadowWithDirection:RMoveDirectionRight];
     _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
 
+    [_LeftVC viewWillAppear:YES];
+    [_MainVC viewWillDisappear:YES];
+    
     [UIView animateWithDuration:_LeftSOpenDuration
                      animations:^{
                          _leftSideView.frame=CGRectMake(0, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
@@ -265,6 +292,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                          _tapGestureRec.enabled = YES;
                          _showingLeft=YES;
                          _MainVC.view.userInteractionEnabled=NO;
+                         [_LeftVC viewDidAppear:YES];
+                         [_MainVC viewDidDisappear:YES];
                      }];
     
     if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftFinish)]) {
@@ -287,6 +316,9 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     [self configureViewShadowWithDirection:RMoveDirectionLeft];
     _rightSideView.frame=CGRectMake(_RightStartX, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
 
+    [_RightVC viewWillAppear:YES];
+    [_MainVC viewWillDisappear:YES];
+    
     [UIView animateWithDuration:_RightSOpenDuration
                      animations:^{
                          _rightSideView.frame=CGRectMake(0, 0, _rightSideView.frame.size.width, _rightSideView.frame.size.height);
@@ -296,6 +328,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                          _tapGestureRec.enabled = YES;
                          _showingRight=YES;
                          _MainVC.view.userInteractionEnabled=NO;
+                         [_RightVC viewDidAppear:YES];
+                         [_MainVC viewDidDisappear:YES];
                      }];
     
     if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightFinish)]) {
@@ -305,6 +339,14 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 - (void)closeSideBar:(BOOL)animated
 {
+    if (_showingLeft) {
+        [_LeftVC viewWillDisappear:YES];
+    }
+    if (_showingRight) {
+        [_RightVC viewWillDisappear:YES];
+    }
+    [_MainVC viewWillAppear:YES];
+    
     CGAffineTransform oriT = CGAffineTransformIdentity;
     if (animated) {
         [UIView animateWithDuration:_mainContentView.transform.tx==_LeftSContentOffset?_LeftSCloseDuration:_RightSCloseDuration
@@ -314,6 +356,14 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                              _rightSideView.frame=CGRectMake(_RightStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
                          }
                          completion:^(BOOL finished) {
+                             if (_showingLeft) {
+                                 [_LeftVC viewDidDisappear:YES];
+                             }
+                             if (_showingRight) {
+                                 [_RightVC viewDidDisappear:YES];
+                             }
+                             [_MainVC viewDidAppear:YES];
+
                              _tapGestureRec.enabled = NO;
                              _showingRight=NO;
                              _showingLeft=NO;
@@ -321,6 +371,14 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                          }];
     }
     else{
+        if (_showingLeft) {
+            [_LeftVC viewDidDisappear:YES];
+        }
+        if (_showingRight) {
+            [_RightVC viewDidDisappear:YES];
+        }
+        [_MainVC viewDidAppear:YES];
+        
         _mainContentView.transform = oriT;
         _leftSideView.frame=CGRectMake(_LeftStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
         _rightSideView.frame=CGRectMake(_RightStartX, 0, _leftSideView.frame.size.width, _leftSideView.frame.size.height);
@@ -418,10 +476,14 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 return;
             }
 
+            [_LeftVC viewWillAppear:YES];
+            
             CGAffineTransform conT = [self transformWithDirection:RMoveDirectionRight];
             [UIView beginAnimations:nil context:nil];
             _mainContentView.transform = conT;
             [UIView commitAnimations];
+            
+            [_LeftVC viewDidAppear:YES];
             
             if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftFinish)]) {
                 [_ldelegate sliderViewLeftFinish];
@@ -439,10 +501,14 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 return;
             }
 
+            [_RightVC viewWillAppear:YES];
+            
             CGAffineTransform conT = [self transformWithDirection:RMoveDirectionLeft];
             [UIView beginAnimations:nil context:nil];
             _mainContentView.transform = conT;
             [UIView commitAnimations];
+            
+            [_RightVC viewDidAppear:YES];
             
             if (_rdelegate!=nil&&[_rdelegate respondsToSelector:@selector(sliderViewRightFinish)]) {
                 [_rdelegate sliderViewRightFinish];
@@ -456,10 +522,14 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         }
         else
         {
+            [_MainVC viewWillAppear:YES];
+            
             CGAffineTransform oriT = CGAffineTransformIdentity;
             [UIView beginAnimations:nil context:nil];
             _mainContentView.transform = oriT;
             [UIView commitAnimations];
+            
+            [_MainVC viewDidAppear:YES];
             
             if (_ldelegate!=nil&&[_ldelegate respondsToSelector:@selector(sliderViewLeftCancel)]) {
                 [_ldelegate sliderViewLeftCancel];
@@ -561,15 +631,63 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    if (_showingLeft) {
+        [_LeftVC viewWillAppear:animated];
+    }
+    if (_showingRight) {
+        [_RightVC viewWillAppear:animated];
+    }
+    if (!_showingLeft&&!_showingRight) {
+        [_MainVC viewWillAppear:animated];
+    }
+    
     if (_mdelegate!=nil&&[_mdelegate respondsToSelector:@selector(sliderViewWillAppear)]) {
         [_mdelegate sliderViewWillAppear];
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    if (_showingLeft) {
+        [_LeftVC viewDidAppear:animated];
+    }
+    if (_showingRight) {
+        [_RightVC viewDidAppear:animated];
+    }
+    if (!_showingLeft&&!_showingRight) {
+        [_MainVC viewDidAppear:animated];
+    }
+}
+
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    if (_showingLeft) {
+        [_LeftVC viewWillDisappear:animated];
+    }
+    if (_showingRight) {
+        [_RightVC viewWillDisappear:animated];
+    }
+    if (!_showingLeft&&!_showingRight) {
+        [_MainVC viewWillDisappear:animated];
+    }
     if (_mdelegate!=nil&&[_mdelegate respondsToSelector:@selector(sliderViewWillDisappear)]) {
         [_mdelegate sliderViewWillDisappear];
+    }
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    if (_showingLeft) {
+        [_LeftVC viewDidDisappear:animated];
+    }
+    if (_showingRight) {
+        [_RightVC viewDidDisappear:animated];
+    }
+    if (!_showingLeft&&!_showingRight) {
+        [_MainVC viewDidDisappear:animated];
     }
 }
 
