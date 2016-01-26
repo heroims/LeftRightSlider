@@ -247,6 +247,12 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     
     controller.view.frame = _mainContentView.frame;
     [_mainContentView addSubview:controller.view];
+    if (_showingLeft) {
+        [_LeftVC viewDidDisappear:YES];
+    }
+    if (_showingRight) {
+        [_RightVC viewDidDisappear:YES];
+    }
     self.MainVC=controller;
     if (![_MainVC isKindOfClass:[controller class]]) {
         [_MainVC viewDidAppear:YES];
