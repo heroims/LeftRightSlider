@@ -459,6 +459,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 return;
             }
 
+            [_MainVC viewDidDisappear:YES];
             [_LeftVC viewWillAppear:YES];
             
             [UIView beginAnimations:nil context:nil];
@@ -480,7 +481,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             if (!_canShowRight||_RightVC==nil) {
                 return;
             }
-
+            [_MainVC viewDidDisappear:YES];
             [_RightVC viewWillAppear:YES];
             
             [UIView beginAnimations:nil context:nil];
@@ -499,6 +500,12 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         }
         else
         {
+            if (_showingLeft) {
+                [_LeftVC viewDidDisappear:YES];
+            }
+            if (_showingRight) {
+                [_RightVC viewDidDisappear:YES];
+            }
             [_MainVC viewWillAppear:YES];
 
             [UIView beginAnimations:nil context:nil];
