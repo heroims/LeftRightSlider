@@ -475,7 +475,8 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
             if (!_canShowLeft||_LeftVC==nil) {
                 return;
             }
-
+            
+            [_MainVC viewDidDisappear:YES];
             [_LeftVC viewWillAppear:YES];
             
             CGAffineTransform conT = [self transformWithDirection:RMoveDirectionRight];
@@ -501,6 +502,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
                 return;
             }
 
+            [_MainVC viewDidDisappear:YES];
             [_RightVC viewWillAppear:YES];
             
             CGAffineTransform conT = [self transformWithDirection:RMoveDirectionLeft];
@@ -522,6 +524,12 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
         }
         else
         {
+            if (_showingLeft) {
+                [_LeftVC viewDidDisappear:YES];
+            }
+            if (_showingRight) {
+                [_RightVC viewDidDisappear:YES];
+            }
             [_MainVC viewWillAppear:YES];
             
             CGAffineTransform oriT = CGAffineTransformIdentity;
