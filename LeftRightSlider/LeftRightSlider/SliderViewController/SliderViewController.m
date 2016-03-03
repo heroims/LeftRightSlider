@@ -72,6 +72,15 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
     return sharedSVC;
 }
 
+- (void)resetSliderController{
+    for (UIView *subview in self.view.subviews) {
+        if ([subview isEqual:_leftSideView]||[subview isEqual:_rightSideView]||[subview isEqual:_mainContentView]) {
+            continue;
+        }
+        [subview removeFromSuperview];
+    }
+}
+
 - (id)initWithCoder:(NSCoder *)decoder {
 	if ((self = [super initWithCoder:decoder])) {
         _LeftSContentOffset=160;
