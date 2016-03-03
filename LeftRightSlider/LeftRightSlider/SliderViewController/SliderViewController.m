@@ -62,6 +62,15 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 
 }
 
+- (void)resetSliderController{
+    for (UIView *subview in self.view.subviews) {
+        if ([subview isEqual:_leftSideView]||[subview isEqual:_rightSideView]||[subview isEqual:_mainContentView]) {
+            continue;
+        }
+        [subview removeFromSuperview];
+    }
+}
+
 + (SliderViewController*)sharedSliderController
 {
     static SliderViewController *sharedSVC;
