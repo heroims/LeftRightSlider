@@ -63,6 +63,7 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 }
 
 - (void)resetSliderController{
+    [_controllersDict removeAllObjects];
     for (UIView *subview in self.view.subviews) {
         if ([subview isEqual:_leftSideView]||[subview isEqual:_rightSideView]||[subview isEqual:_mainContentView]) {
             continue;
