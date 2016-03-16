@@ -9,6 +9,26 @@
 
 #import "LRNavigationController.h"
 
+@implementation UIViewController (LRNavigationController)
+
+BOOL setCanDragBack;
+
+static NSString *const kCanDragBack = @"canDragBack";
+
+-(void)setCanDragBack:(BOOL)canDragBack{
+    if (!setCanDragBack) {
+        canDragBack=YES;
+        setCanDragBack=YES;
+    }
+    objc_setAssociatedObject(self, &kCanDragBack, [NSNumber numberWithBool:canDragBack], OBJC_ASSOCIATION_RETAIN);
+}
+
+-(BOOL)canDragBack{
+    return [objc_getAssociatedObject(self, &kCanDragBack) boolValue];
+}
+
+@end
+
 @interface LRNavigationController ()
 {
     CGPoint startTouch;
@@ -32,8 +52,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _canDragBack = YES;
-        
         _startX=-200;
         _judgeOffset=50;
         _contentScale=1;
@@ -665,7 +683,7 @@
 {
     BOOL isUseScreenShots=[[NSBundle mainBundle] pathForResource:NSStringFromClass([self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1] class]) ofType:@"nib"]!=nil;
     
-    if (self.viewControllers.count <= 1 || !self.canDragBack) return;
+    if (self.viewControllers.count <= 1 || !self.visibleViewController.canDragBack) return;
     
     CGPoint touchPoint = [recoginzer locationInView:[UIApplication sharedApplication].keyWindow];
     
