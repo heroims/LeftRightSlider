@@ -11,20 +11,13 @@
 
 @implementation UIViewController (LRNavigationController)
 
-BOOL setCanDragBack;
-
 static NSString *const kCanDragBack = @"canDragBack";
 
 -(void)setCanDragBack:(BOOL)canDragBack{
-    objc_setAssociatedObject(self, &kCanDragBack, [NSNumber numberWithBool:canDragBack], OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, &kCanDragBack, [NSNumber numberWithBool:!canDragBack], OBJC_ASSOCIATION_RETAIN);
 }
 
 -(BOOL)canDragBack{
-    if (!setCanDragBack) {
-        setCanDragBack=YES;
-        return YES;
-    }
-
     return [objc_getAssociatedObject(self, &kCanDragBack) boolValue];
 }
 
@@ -684,7 +677,8 @@ static NSString *const kCanDragBack = @"canDragBack";
 {
     BOOL isUseScreenShots=[[NSBundle mainBundle] pathForResource:NSStringFromClass([self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1] class]) ofType:@"nib"]!=nil;
     
-    if (self.viewControllers.count <= 1 || !self.visibleViewController.canDragBack) return;
+    //取反canDragBack保证默认值YES
+    if (self.viewControllers.count <= 1 || self.visibleViewController.canDragBack) return;
     
     CGPoint touchPoint = [recoginzer locationInView:[UIApplication sharedApplication].keyWindow];
     
