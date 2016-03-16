@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LRNavigationController : UINavigationController
+@interface UIViewController (LRNavigationController)
 
 @property (nonatomic, assign) BOOL canDragBack;
+
+@end
+
+@interface LRNavigationController : UINavigationController
 
 @property (nonatomic, assign) float startX;
 
