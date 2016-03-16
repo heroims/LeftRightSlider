@@ -16,14 +16,15 @@ BOOL setCanDragBack;
 static NSString *const kCanDragBack = @"canDragBack";
 
 -(void)setCanDragBack:(BOOL)canDragBack{
-    if (!setCanDragBack) {
-        canDragBack=YES;
-        setCanDragBack=YES;
-    }
     objc_setAssociatedObject(self, &kCanDragBack, [NSNumber numberWithBool:canDragBack], OBJC_ASSOCIATION_RETAIN);
 }
 
 -(BOOL)canDragBack{
+    if (!setCanDragBack) {
+        setCanDragBack=YES;
+        return YES;
+    }
+
     return [objc_getAssociatedObject(self, &kCanDragBack) boolValue];
 }
 
