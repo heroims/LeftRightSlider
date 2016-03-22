@@ -418,6 +418,7 @@ static NSString *const kCanDragBack = @"canDragBack";
 
     }
     else{
+        [_imgScreenShots removeLastObject];
         [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
     }
 
