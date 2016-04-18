@@ -30,6 +30,7 @@ static NSString *const kCanDragBack = @"canDragBack";
     UIView *lastScreenShotView;
     UIView *blackMask;
     
+    BOOL unPaningBegin;
 }
 
 @property (nonatomic,retain) UIView *backgroundView;
@@ -671,11 +672,92 @@ static NSString *const kCanDragBack = @"canDragBack";
                                             lastScreenShotView.superview.frame.size.height*lastScreenScale)];
 }
 
+-(void)paningGestureBegin:(BOOL)isUseScreenShots touchPoint:(CGPoint)touchPoint{
+    _isMoving = YES;
+    startTouch = touchPoint;
+    
+    if (!_backgroundView)
+    {
+        CGRect frame = self.view.frame;
+        
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+#else
+        if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
+        }
+        else{
+#endif
+#if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
+#else
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+            [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
+            
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
+#endif
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+#else
+        }
+#endif
+        blackMask.backgroundColor = [UIColor blackColor];
+        [_backgroundView addSubview:blackMask];
+    }
+    
+    _backgroundView.hidden = NO;
+    
+    if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
+    
+#if __has_feature(objc_arc)
+    if (isUseScreenShots) {
+        lastScreenShotView = [[UIImageView alloc] init];
+    }
+    else{
+        lastScreenShotView = [[UIView alloc] init];
+    }
+#else
+    if (lastScreenShotView!=nil) {
+        [lastScreenShotView release];
+        lastScreenShotView=nil;
+    }
+    if (isUseScreenShots) {
+        lastScreenShotView = [[UIImageView alloc] init];
+    }
+    else{
+        lastScreenShotView = [[UIView alloc] init];
+    }
+#endif
+    for (UIView *subView in lastScreenShotView.subviews) {
+        [subView removeFromSuperview];
+    }
+    
+    if (isUseScreenShots) {
+        [(UIImageView*)lastScreenShotView setImage:[_imgScreenShots lastObject]];
+        lastScreenShotView.frame=CGRectMake(0, 0, ((UIImageView*)lastScreenShotView).image.size.width, ((UIImageView*)lastScreenShotView).image.size.height);
+    }
+    else{
+        [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
+    }
+    
+    [lastScreenShotView setFrame:CGRectMake(_startX,
+                                            lastScreenShotView.frame.origin.y,
+                                            lastScreenShotView.frame.size.width,
+                                            lastScreenShotView.frame.size.height)];
+    
+    [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
+}
 
 #pragma mark - Gesture Recognizer
 
 - (void)paningGestureReceive:(UIPanGestureRecognizer *)recoginzer
 {
+    NSLog(@"========%zi----------",recoginzer.state);
+
     BOOL isUseScreenShots=[[NSBundle mainBundle] pathForResource:NSStringFromClass([self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1] class]) ofType:@"nib"]!=nil;
     
     //取反canDragBack保证默认值YES
@@ -684,88 +766,11 @@ static NSString *const kCanDragBack = @"canDragBack";
     CGPoint touchPoint = [recoginzer locationInView:[UIApplication sharedApplication].keyWindow];
     
     if (recoginzer.state == UIGestureRecognizerStateBegan) {
-        
-        _isMoving = YES;
-        startTouch = touchPoint;
-        
-        if (!_backgroundView)
-        {
-            CGRect frame = self.view.frame;
-            
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-#else
-            if (self.navigationBar.translucent||[UIApplication sharedApplication].statusBarStyle==UIStatusBarStyleBlackTranslucent) {
-                _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
-                [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
-                
-                blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
-            }
-            else{
-#endif
-#if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-                _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
-                [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
-                
-                blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):0), frame.size.width , frame.size.height)];
-#else
-                _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
-                [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
-                
-                blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
-#endif
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-#else
-            }
-#endif
-            blackMask.backgroundColor = [UIColor blackColor];
-            [_backgroundView addSubview:blackMask];
-        }
-        
-        _backgroundView.hidden = NO;
-        
-        if (lastScreenShotView) [lastScreenShotView removeFromSuperview];
-        
-#if __has_feature(objc_arc)
-        if (isUseScreenShots) {
-            lastScreenShotView = [[UIImageView alloc] init];
-        }
-        else{
-            lastScreenShotView = [[UIView alloc] init];
-        }
-#else
-        if (lastScreenShotView!=nil) {
-            [lastScreenShotView release];
-            lastScreenShotView=nil;
-        }
-        if (isUseScreenShots) {
-            lastScreenShotView = [[UIImageView alloc] init];
-        }
-        else{
-            lastScreenShotView = [[UIView alloc] init];
-        }
-#endif
-        for (UIView *subView in lastScreenShotView.subviews) {
-            [subView removeFromSuperview];
-        }
-        
-        if (isUseScreenShots) {
-            [(UIImageView*)lastScreenShotView setImage:[_imgScreenShots lastObject]];
-            lastScreenShotView.frame=CGRectMake(0, 0, ((UIImageView*)lastScreenShotView).image.size.width, ((UIImageView*)lastScreenShotView).image.size.height);
-        }
-        else{
-            [lastScreenShotView addSubview:((UIViewController*)self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1]).view];
-        }
-
-        [lastScreenShotView setFrame:CGRectMake(_startX,
-                                                lastScreenShotView.frame.origin.y,
-                                                lastScreenShotView.frame.size.width,
-                                                lastScreenShotView.frame.size.height)];
-        
-        [_backgroundView insertSubview:lastScreenShotView belowSubview:blackMask];
-        
+        unPaningBegin=YES;
+        [self paningGestureBegin:isUseScreenShots touchPoint:touchPoint];
         
     }else if (recoginzer.state == UIGestureRecognizerStateEnded){
-        
+        unPaningBegin=NO;
         if (touchPoint.x - startTouch.x > _judgeOffset)
         {
             [UIView animateWithDuration:0.3 animations:^{
@@ -795,8 +800,9 @@ static NSString *const kCanDragBack = @"canDragBack";
         }
         return;
         
-    }else if (recoginzer.state == UIGestureRecognizerStateCancelled){
-        
+    }
+    else if (recoginzer.state == UIGestureRecognizerStateCancelled){
+        unPaningBegin=NO;
         [UIView animateWithDuration:0.3 animations:^{
             [self moveViewWithX:0];
         } completion:^(BOOL finished) {
@@ -805,10 +811,15 @@ static NSString *const kCanDragBack = @"canDragBack";
         }];
         return;
     }
-    
-    if (_isMoving) {
+    else if (recoginzer.state == UIGestureRecognizerStateChanged){
+        _isMoving=YES;
+        if (!unPaningBegin) {
+            unPaningBegin=YES;
+            [self paningGestureBegin:isUseScreenShots touchPoint:touchPoint];
+        }
         [self moveViewWithX:touchPoint.x - startTouch.x];
     }
+    
 }
 
 @end
