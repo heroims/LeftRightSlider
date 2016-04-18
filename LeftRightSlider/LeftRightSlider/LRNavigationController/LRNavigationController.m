@@ -756,8 +756,6 @@ static NSString *const kCanDragBack = @"canDragBack";
 
 - (void)paningGestureReceive:(UIPanGestureRecognizer *)recoginzer
 {
-    NSLog(@"========%zi----------",recoginzer.state);
-
     BOOL isUseScreenShots=[[NSBundle mainBundle] pathForResource:NSStringFromClass([self.viewControllers[[self.viewControllers indexOfObject:self.visibleViewController]-1] class]) ofType:@"nib"]!=nil;
     
     //取反canDragBack保证默认值YES
