@@ -8,6 +8,7 @@
 
 
 #import "LRNavigationController.h"
+#import <objc/runtime.h>
 
 @implementation UIViewController (LRNavigationController)
 
