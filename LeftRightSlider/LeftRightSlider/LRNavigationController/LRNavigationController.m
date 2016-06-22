@@ -140,10 +140,10 @@ static NSString *const kCanDragBack = @"canDragBack";
         else{
 #endif
 #if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height-([[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height)))];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height-([[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0))))];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height)];
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height)];
 #else
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
@@ -279,10 +279,10 @@ static NSString *const kCanDragBack = @"canDragBack";
         else{
 #endif
 #if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height-([[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height)))];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height-([[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0))))];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height)];
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height)];
 #else
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
@@ -369,10 +369,10 @@ static NSString *const kCanDragBack = @"canDragBack";
         else{
 #endif
 #if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height)];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height)];
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height)];
 #else
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
@@ -465,10 +465,10 @@ static NSString *const kCanDragBack = @"canDragBack";
         else{
 #endif
 #if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height)];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height)];
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height)];
 #else
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
@@ -572,10 +572,10 @@ static NSString *const kCanDragBack = @"canDragBack";
         else{
 #endif
 #if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height)];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height)];
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height)];
 #else
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
@@ -692,10 +692,10 @@ static NSString *const kCanDragBack = @"canDragBack";
         else{
 #endif
 #if  __IPHONE_OS_VERSION_MAX_ALLOWED>=__IPHONE_7_1
-            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height)];
+            _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
             
-            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):[UIApplication sharedApplication].statusBarFrame.size.height), frame.size.width , frame.size.height)];
+            blackMask = [[UIView alloc]initWithFrame:CGRectMake(0, [[[UIDevice currentDevice] systemVersion] floatValue]<7?0:([UIApplication sharedApplication].statusBarFrame.size.height>20?([UIApplication sharedApplication].statusBarFrame.size.height-20):([UIApplication sharedApplication].statusBarFrame.size.height>0?[UIApplication sharedApplication].statusBarFrame.size.height:0)), frame.size.width , frame.size.height)];
 #else
             _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, frame.size.width , frame.size.height-[UIApplication sharedApplication].statusBarFrame.size.height)];
             [self.view.superview insertSubview:_backgroundView belowSubview:self.view];
