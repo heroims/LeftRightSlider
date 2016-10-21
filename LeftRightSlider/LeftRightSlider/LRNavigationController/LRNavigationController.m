@@ -72,9 +72,9 @@ static NSString *const kCanDragBack = @"canDragBack";
     [blackMask release];
     [_backgroundView release];
     [_unGestureDic release];
-    if (_imgScreenShot!=nil) {
+    if (_imgScreenShots!=nil) {
         [_imgScreenShots removeAllObjects];
-        [_imgScreenShot release];
+        [_imgScreenShots release];
     }
     [super dealloc];
 #endif
