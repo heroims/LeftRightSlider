@@ -93,6 +93,7 @@
             [[SliderViewController sharedSliderController] showContentControllerWithModel:@"RightVC"];
             break;
         default:
+            NSLog(@"TOUCH NOTHING");
             break;
     }
 }
