@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'LRNavigationController'
-  s.version               = '1.4.0'
+  s.version               = '1.5.0'
   s.summary               = 'push NavigationController With Custom Animation'
   s.homepage              = 'https://github.com/heroims/LeftRightSlider'
   s.license               = { :type => 'MIT', :file => 'README.md' }
